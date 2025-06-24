@@ -6,18 +6,20 @@
 class Task {
 public:
     // Constructor with parameters
-    Task(std::string& name, Date& due, std::string& priority, std::string& status);
-    // Turn task into string
-    std::string task_to_string() const;
+    Task(const std::string& name, Date due, std::string priority, std::string stat);
+    // Normalise string
+    static void to_upper_string(std::string& str);
+    // For testing purposes
+    [[nodiscard]] std::string task_to_string() const;
 private:
-    // Task name
+    // Task name (Non-empty)
     std::string taskName;
-    // Due date
+    // Due date (dd/mm/yyyy)
     Date dueDate;
     // Task priority (LOW, NORMAL, HIGH)
     std::string taskPriority;
-    // Status
-    std::string status;
+    // Status (IN PROGRESS, TODO)
+    std::string taskStatus;
 };
 
 #endif

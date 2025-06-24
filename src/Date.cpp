@@ -7,6 +7,8 @@
 
 using namespace std;
 
+Date::Date() : day(0), month(0), year(0){}
+
 // Constructor with parameters (dd/mm/yyyy)
 Date::Date(const int day, const int month, const int year) {
     // Check "date bounds"
@@ -39,6 +41,14 @@ string Date::date_to_string() const {
 bool Date::is_leap(int year) {
     // A year is a leap year if divisible by 4 and not by 100, or divisible by 400
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+bool Date::is_valid() const {
+    bool res = false;
+    if (day == 0 && month == 0 && year == 0) {
+        res = true;
+    }
+    return res;
 }
 
 

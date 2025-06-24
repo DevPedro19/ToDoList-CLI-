@@ -17,3 +17,8 @@ file(GLOB_RECURSE SOURCES_BASE CONFIGURE_DEPENDS "src/*.cpp")
 add_executable(main ${SOURCES_BASE} main/main.cpp)
 
 target_include_directories(main PRIVATE include)
+
+# Create executable considering libraries in include (.hpp files)
+add_executable(tester ${SOURCES_BASE} tester/tester.cpp)
+
+target_include_directories(tester PRIVATE include)
