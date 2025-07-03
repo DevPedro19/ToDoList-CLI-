@@ -7,6 +7,8 @@
 #include "InvalidDate.hpp"
 #include <iostream>
 
+#include "ToDoList.hpp"
+
 int main() {
 
     std::cout << "------------------DATE TESTING----------------" << std::endl;
@@ -109,6 +111,30 @@ int main() {
     } catch (const InvalidDate& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     }
+    std::cout << "------------------Todolist TESTING----------------" << std::endl;
+    try {
+        Date date(3, 7, 2025);
+        Task new_task("Create ToDoList structure in JSON file", date, "HIGH", "TODO");
+        std::cout << new_task.task_to_string() << std::endl;
+        ToDoList todolist;
+        todolist.addTask(new_task);
+    } catch (const InvalidField& e) {
+        std::cout << "Caught exception: " << e.what() << std::endl;
+    } catch (const InvalidDate& e) {
+        std::cout << "Caught exception: " << e.what() << std::endl;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     return 0;
 }
 

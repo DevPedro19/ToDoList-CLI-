@@ -38,6 +38,7 @@ string Date::date_to_string() const {
     return out.str();
 }
 
+
 bool Date::is_leap(int year) {
     // A year is a leap year if divisible by 4 and not by 100, or divisible by 400
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);

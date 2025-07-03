@@ -11,7 +11,7 @@ class Date{
         Date();
         // Constructor with parameters (dd/mm/yyyy)
         Date(int day, int month, int year);
-        // For debug purposes
+        // For debug purposes and to add date to the JSON file
         [[nodiscard]] std::string date_to_string() const;
         // Verify if the year is leap or non leap
         static bool is_leap(int year);
