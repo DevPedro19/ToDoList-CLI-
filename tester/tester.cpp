@@ -109,12 +109,6 @@ int main() {
     } catch (const InvalidDate& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     }
-
-
-
-
-
-    
     return 0;
 }
 

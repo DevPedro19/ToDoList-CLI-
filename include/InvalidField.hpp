@@ -9,7 +9,7 @@
 // This class is used to, by inheritance, define the invalid date error used to verify the constructors of date.hpp
 class InvalidField : public std::logic_error {
 public:
-    InvalidField(): logic_error("Invalid Field") {}
+    explicit InvalidField(const std::string& field): logic_error("Invalid " + field) {}
 };
 
 #endif //INVALIDFIELD_HPP

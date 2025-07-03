@@ -11,6 +11,11 @@ public:
     static void to_upper_string(std::string& str);
     // For testing purposes
     [[nodiscard]] std::string task_to_string() const;
+    // Getters
+    [[nodiscard]] std::string getTaskName() const;
+    [[nodiscard]] Date getDueDate() const;
+    [[nodiscard]] std::string getTaskPriority() const;
+    [[nodiscard]] std::string getTaskStatus() const;
 private:
     // Task name (Non-empty)
     std::string taskName;
