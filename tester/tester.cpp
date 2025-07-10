@@ -118,6 +118,13 @@ int main() {
         std::cout << new_task.task_to_string() << std::endl;
         ToDoList todolist;
         todolist.addTask(new_task);
+        todolist.addTask(new_task);
+        todolist.saveFile("tasks");
+        todolist.outputFile("tasks");
+        // Testing if adding a new tasks "resets" the info already in the file
+        todolist.addTask(new_task);
+        todolist.saveFile("tasks");
+        todolist.outputFile("tasks");
     } catch (const InvalidField& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     } catch (const InvalidDate& e) {
