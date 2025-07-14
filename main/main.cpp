@@ -2,6 +2,7 @@
 #include <limits>
 #include <string>
 #include <filesystem>
+#include <set>
 using namespace std;
 
 
@@ -10,7 +11,8 @@ enum IntroMenu {
     EXIT
 };
 
-void ToDoListDisplay() {
+set<string> ToDoListVector() {
+    set<string> listNames;
     string path = "../lists/";
     // Iterates over paths in the /list directory
     for (const auto & entry : filesystem::directory_iterator(path)) {
@@ -22,48 +24,54 @@ void ToDoListDisplay() {
         // Get substring based on previous indexes
         fileName = fileName.substr(start + 1, fileName.length() - end);
         // Output fileName
-        std::cout << fileName << std::endl;
+        listNames.insert(fileName);
+    }
+    return listNames;
+}
+
+// Displays the existing ToDoList names
+void SelectToDoListMENU(const set<string>& existingLists) {
+    if (existingLists.empty()) {
+        cout << "No ToDo lists found." << endl;
+        return;
+    }
+
+    cout << "===== ToDoLists MENU =====" << endl;
+    int index = 1;
+    for (const auto& name : existingLists) {
+        cout << index++ << ". " << name << endl;
     }
 }
 
-int IntroMenuHandler(){
-    // Displays message
-    cout << "=====ToDoList INTRO MENU=====" << endl;
+// Displays intro menu and returns the selected option
+int IntroMenuHandler() {
+    cout << "===== ToDoList INTRO MENU =====" << endl;
     cout << "1. Check existing ToDo Lists" << endl;
     cout << "2. EXIT" << endl;
 
-
-    // Gets validated user input
-    cout << "Enter user option ( 1 | 2 ): ";
     int userOption;
     while (true) {
-        // User userOption
-        // Check if the value is valid
+        cout << "Enter user option (1 | 2): ";
         if (cin >> userOption && (userOption == CHECK || userOption == EXIT)) {
             break;
         }
         cout << "Invalid input. Please enter a valid option." << endl;
-        // Clears input value
         cin.clear();
-        // Cleanup of the input buffer (ignores everything until the newline delimiter)
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-
-    // Check user option
-     if (userOption == CHECK) {
-         std::cout << "=====LISTS MENU=====" << std::endl;
-         ToDoListDisplay();
-    }
-    return 0;
+    return userOption;
 }
-
-// Select ToDoList MENU
-
 
 
 int main() {
-    // Intro Menu
-    IntroMenuHandler();
-
+    // Get user selection
+    int userIntroMenu = IntroMenuHandler();
+    // Option selected
+    if (userIntroMenu == CHECK) {
+        // Set with lists names
+        set<string> lists = ToDoListVector();
+        SelectToDoListMENU(lists);
+    }
+    return 0;
 }
