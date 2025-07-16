@@ -3,14 +3,28 @@
 int main() {
     // Create menu object
     Menu menu;
-    // Get user selection
+
     int userIntroMenu = menu.IntroMenu();
-    // Option selected
+
+    int userSelectMenu = 0;
+
+    // User selection from intro menu
     if (userIntroMenu == CHECK) {
-        // Set with lists names
-        set<string> lists = menu.ToDoListVector();
-        // Display existing lists
-        menu.SelectMenu();
+        // Map with list's names
+        menu.ToDoListMap();
+        // Display menu for selecting ToDoList
+        userSelectMenu = menu.SelectMenu();
+    }
+
+    // User selection for select menu
+    if (userSelectMenu == SELECT) {
+        // Find corresponding list
+        menu.FindToDoList();
+        menu.ToDoListMenu();
+    }
+
+    if (userSelectMenu == DELETE) {
+        // Delete list from lists folder
     }
     return 0;
 }

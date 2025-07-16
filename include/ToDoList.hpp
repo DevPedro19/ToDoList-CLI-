@@ -4,18 +4,18 @@
 #define TODOLIST_H
 
 #include "Task.hpp"
-#include <iostream>
 #include <string>
-#include <fstream>
-#include <ios>
 // Libs to work with JSON file in C++
 #include <json.hpp>
+using std::string;
 using json = nlohmann::json;
 
 class ToDoList {
 public:
     // Create empty JSON array of tasks
     ToDoList();
+    // Copy constructor from a file
+    ToDoList(string& filename);
     // Add new task to JSON file
     void addTask(const Task& task);
     // Save info in file
@@ -23,7 +23,6 @@ public:
     void saveFile(const std::string& filename);
     // Parse JSON array in file
     void outputFile(const std::string& filename);
-
     // Create static functions capable of sorting the JSON array based on different parameters
     // For example, sort the array by alphabetic order, priority or even date
 

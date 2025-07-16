@@ -2,14 +2,13 @@
 // Created by pedro on 7/16/25.
 //
 #include "Menu.hpp"
+#include "ToDoList.hpp"
 #include <iostream>
 #include <limits>
 #include <filesystem>
 
 using std::cout;
 using std::cin;
-using std::set;
-using std::string;
 using std::numeric_limits;
 using std::streamsize;
 
@@ -35,8 +34,9 @@ int Menu::IntroMenu() {
     return userOption;
 }
 
-set<string> Menu::ToDoListVector() {
-    set<string> listNames;
+void Menu::ToDoListMap() {
+    map<int, string> listNames;
+    int index = 1;
     string path = "../lists/";
     // Iterates over paths in the /list directory
     for (const auto & entry : std::filesystem::directory_iterator(path)) {
@@ -48,9 +48,10 @@ set<string> Menu::ToDoListVector() {
         // Get substring based on previous indexes
         fileName = fileName.substr(start + 1, fileName.length() - end);
         // Output fileName
-        listNames.insert(fileName);
+        listNames.insert({index, fileName});
+        index++;
     }
-    return listNames;
+    existingLists = listNames;
 }
 
 int Menu::SelectMenu() {
@@ -60,9 +61,8 @@ int Menu::SelectMenu() {
         cout << "No ToDo lists found.\n";
         return 0;
     }
-    int index = 1;
-    for (const auto& name : existingLists) {
-        cout << index++ << ". " << name << '\n';
+    for (const auto& pair : existingLists) {
+        cout << pair.first << ". " << pair.second << '\n';
     }
     cout << "===== ToDoLists MENU =====\n";
     cout << "1. Select ToDoList\n";
@@ -80,4 +80,35 @@ int Menu::SelectMenu() {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     return userOption;
+}
+
+void Menu::FindToDoList() {
+    int listIndex = 0;
+    cout << "Enter ToDoList associated number: ";
+    while (true) {
+        // Get iterator if ToDoList is selected
+        if (cin >> listIndex) {
+            auto found = existingLists.find(listIndex);
+            if (found != existingLists.end()) {
+                listName = found->second;
+                break;
+            }
+            cout << "Not found try again.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+
+        }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
+
+void Menu::ToDoListMenu() {
+    // Update todolist object so we can execute method's from ToDoList class
+    todolist = ToDoList(listName);
+
+    // TODO Menu
+
 }
