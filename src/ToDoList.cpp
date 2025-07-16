@@ -7,8 +7,11 @@ ToDoList::ToDoList() {
 }
 
 ToDoList::ToDoList(string &filename) {
+    // Input file with corresponding filepath
     std::ifstream inputFile("../lists/" + filename + ".json");
+    // Parsed Input File and saved in Doc json variable
     json Doc{json::parse(inputFile)};
+    // document is now the parsed Doc
     document = Doc;
 }
 
