@@ -19,9 +19,9 @@ public:
     // Add new task to JSON file
     void addTask(const Task& task);
     // Save info in file
-    void saveFile(const std::string& filename);
+    void saveFile();
     // Parse JSON array in file
-    void outputFile(const std::string& filename);
+    void outputFile();
     // Create static functions capable of sorting the JSON array based on different parameters
     // For example, sort the array by alphabetic order, priority or even date
 
@@ -32,6 +32,7 @@ public:
 
 private:
     json document;
+    std::string fileName;
 };
 
 #endif

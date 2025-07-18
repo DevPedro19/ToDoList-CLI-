@@ -13,6 +13,7 @@ ToDoList::ToDoList(string &filename) {
     json Doc{json::parse(inputFile)};
     // document is now the parsed Doc
     document = Doc;
+    fileName = filename;
 }
 
 
@@ -28,23 +29,23 @@ void ToDoList::addTask(const Task &task){
     document.push_back(currentTask);
 }
 
-void ToDoList::saveFile(const std::string &filename) {
+void ToDoList::saveFile() {
     // Create an object capable of writing JSON info to a JSON file, in append mode, so it doesn't erase previous info
     // It will be saved in the sub directory lists
-    std::ofstream outputFile("../lists/" + filename + ".json");
+    std::ofstream outputFile("../lists/" + fileName + ".json");
     // Output with correct indent (using dump method)
     outputFile << document.dump(4);
 }
 
-void ToDoList::outputFile(const std::string &filename) {
-    std::ifstream inputFile("../lists/" + filename + ".json");
+void ToDoList::outputFile() {
+    std::ifstream inputFile("../lists/" + fileName + ".json");
     // Creates an iterable object of type JSON to get data and pretty print the tasks to the console
     // jsonData works like a c++ style array
     json jsonData;
     // Parsed file is now in the object
     inputFile >> jsonData;
     // Output pretty-printing the result
-    std::cout << "LIST: " << filename << std::endl;
+    std::cout << "LIST: " << fileName << std::endl;
     for (const auto& item: jsonData) {
         std::cout << item.dump(4) << std::endl;
     }

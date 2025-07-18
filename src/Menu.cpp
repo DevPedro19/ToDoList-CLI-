@@ -148,3 +148,8 @@ int Menu::ToDoListMenu() {
     }
     return userOption;
 }
+
+
+void Menu::ShowToDoList() {
+    todolist.outputFile();
+}

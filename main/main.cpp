@@ -22,22 +22,21 @@ int main() {
     if (userSelectMenu == SELECT) {
         // Find corresponding list
         menu.FindToDoList();
-        menu.ToDoListMenu();
         userToDoListMenu = menu.ToDoListMenu();
     }
 
     if (userSelectMenu == DELETE) {
-        // Delete list from lists folder
+        // Find corresponding list
         menu.FindToDoList();
+        // Delete list
         menu.DeleteToDoList();
     }
 
     while (userToDoListMenu != TD_EXIT) {
         // User Selection for ToDoList Menu
         if (userToDoListMenu == SHOW) {
-
-
-
+            // Show ToDoList
+            menu.ShowToDoList();
         }
         // Show menu again and restart the loop
         userToDoListMenu = menu.ToDoListMenu();
