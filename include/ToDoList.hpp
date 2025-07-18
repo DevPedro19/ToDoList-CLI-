@@ -5,7 +5,7 @@
 
 #include "Task.hpp"
 #include <string>
-// Libs to work with JSON file in C++
+// Lib to work with JSON file in C++
 #include <json.hpp>
 using std::string;
 using json = nlohmann::json;
@@ -19,7 +19,6 @@ public:
     // Add new task to JSON file
     void addTask(const Task& task);
     // Save info in file
-    // Make the file saved more readable
     void saveFile(const std::string& filename);
     // Parse JSON array in file
     void outputFile(const std::string& filename);
@@ -31,7 +30,6 @@ public:
 
     // Remove tasks
 
-    // Delete JSON files in lists directory
 private:
     json document;
 };

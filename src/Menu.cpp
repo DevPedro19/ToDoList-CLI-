@@ -7,10 +7,12 @@
 #include <limits>
 #include <filesystem>
 
+
 using std::cout;
 using std::cin;
 using std::numeric_limits;
 using std::streamsize;
+using std::filesystem::remove;
 
 Menu::Menu() {}
 
@@ -27,7 +29,9 @@ int Menu::IntroMenu() {
             break;
         }
         cout << "Invalid input. Please enter a valid option\n";
+        // Clears the input stream
         cin.clear();
+        // Ignores everything until the next line
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
@@ -84,7 +88,7 @@ int Menu::SelectMenu() {
 
 void Menu::FindToDoList() {
     int listIndex = 0;
-    cout << "Enter ToDoList associated number: ";
+    cout << "Enter ToDoList associated number (In existing ToDoLists Menu): ";
     while (true) {
         // Get iterator if ToDoList is selected
         if (cin >> listIndex) {
@@ -105,10 +109,42 @@ void Menu::FindToDoList() {
     }
 }
 
-void Menu::ToDoListMenu() {
-    // Update todolist object so we can execute method's from ToDoList class
+
+void Menu::DeleteToDoList() {
+    // Path of selected list, corresponding to the variable listName
+    string path = "../lists/" + listName + ".json";
+    // Using the filesystem function remove to remove the file based on its filepath
+    remove(path);
+}
+
+
+int Menu::ToDoListMenu() {
+    // Update todolist object so we can execute method's from ToDoList class in following methods of the class
     todolist = ToDoList(listName);
 
-    // TODO Menu
+    cout << "===== " << listName << " =====\n";
+    // Options from the menu
+    cout << "1. Show tasks\n";
+    cout << "2. Add task\n";
+    // Order ToDoList based on different criteria
+    cout << "3. Order by (1 - Alphabetic order | 2 - Due date | 3 - Priority | 4 - Status)\n";
+    // Delete tasks
+    cout << "4. Remove task\n";
+    // Edit task
+    cout << "5. Edit task\n";
+    // EXIT
+    cout << "6. EXIT\n";
 
+    int userOption;
+    while (true) {
+        cout << "Enter user option (1 | 2 | 3 | 4 | 5 | 6): ";
+        if (cin >> userOption && (userOption == SHOW || userOption == ADD || userOption == ORDER || userOption == REMOVE
+                                    || userOption == EDIT || userOption == TD_EXIT)) {
+            break;
+        }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return userOption;
 }

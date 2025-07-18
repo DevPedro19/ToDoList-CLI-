@@ -13,6 +13,7 @@ using std::string;
 // Enums for different MENUS (in Menu.hpp so it can used inside the class and also in main.cpp)
 enum IntroMenu{CHECK = 1, INTRO_EXIT = 2};
 enum SelectMenu {SELECT = 1, DELETE = 2, SELECT_EXIT = 3 };
+enum ToDoListMenu{SHOW = 1, ADD = 2, ORDER = 3, REMOVE = 4, EDIT = 5, TD_EXIT = 6};
 
 class Menu {
 public:
@@ -26,9 +27,12 @@ public:
     int SelectMenu();
     // Find the corresponding list
     void FindToDoList();
+    // Delete the corresponding ToDoList
+    void DeleteToDoList();
     // Enter the ToDoList to proceed with other operations
-    void ToDoListMenu();
-    // Delete ToDoList
+    int ToDoListMenu();
+    // Show ToDoList
+    void ShowToDoList();
 private:
     map<int, string> existingLists;
     string listName;

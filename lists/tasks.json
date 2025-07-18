@@ -1,20 +1,20 @@
 [
-    {
-        "dueDate": "03/07/2025",
-        "taskName": "Create ToDoList structure in JSON file",
-        "taskPriority": "HIGH",
-        "taskStatus": "TODO"
-    },
-    {
-        "dueDate": "03/07/2025",
-        "taskName": "Create ToDoList structure in JSON file",
-        "taskPriority": "HIGH",
-        "taskStatus": "TODO"
-    },
-    {
-        "dueDate": "03/07/2025",
-        "taskName": "Create ToDoList structure in JSON file",
-        "taskPriority": "HIGH",
-        "taskStatus": "TODO"
-    }
+  {
+    "dueDate": "03/07/2025",
+    "taskName": "Create ToDoList structure in JSON file",
+    "taskPriority": "HIGH",
+    "taskStatus": "TODO"
+  },
+  {
+    "dueDate": "03/07/2025",
+    "taskName": "Create ToDoList structure in JSON file",
+    "taskPriority": "HIGH",
+    "taskStatus": "TODO"
+  },
+  {
+    "dueDate": "03/07/2025",
+    "taskName": "Create ToDoList structure in JSON file",
+    "taskPriority": "HIGH",
+    "taskStatus": "TODO"
+  }
 ]

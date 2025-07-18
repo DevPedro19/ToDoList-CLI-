@@ -16,15 +16,30 @@ int main() {
         userSelectMenu = menu.SelectMenu();
     }
 
+    int userToDoListMenu = 0;
+
     // User selection for select menu
     if (userSelectMenu == SELECT) {
         // Find corresponding list
         menu.FindToDoList();
         menu.ToDoListMenu();
+        userToDoListMenu = menu.ToDoListMenu();
     }
 
     if (userSelectMenu == DELETE) {
         // Delete list from lists folder
+        menu.FindToDoList();
+        menu.DeleteToDoList();
     }
-    return 0;
+
+    while (userToDoListMenu != TD_EXIT) {
+        // User Selection for ToDoList Menu
+        if (userToDoListMenu == SHOW) {
+
+
+
+        }
+        // Show menu again and restart the loop
+        userToDoListMenu = menu.ToDoListMenu();
+    }
 }
