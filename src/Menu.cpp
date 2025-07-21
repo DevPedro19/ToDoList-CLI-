@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 #include <filesystem>
+#include "InvalidDate.hpp"
 
 
 using std::cout;
@@ -13,6 +14,7 @@ using std::cin;
 using std::numeric_limits;
 using std::streamsize;
 using std::filesystem::remove;
+using std::toupper;
 
 Menu::Menu() {}
 
@@ -88,7 +90,7 @@ int Menu::SelectMenu() {
 
 void Menu::FindToDoList() {
     int listIndex = 0;
-    cout << "Enter ToDoList associated number (In existing ToDoLists Menu): ";
+    cout << "Enter ToDoList associated number (In Existing ToDoLists Menu): ";
     while (true) {
         // Get iterator if ToDoList is selected
         if (cin >> listIndex) {
@@ -153,3 +155,129 @@ int Menu::ToDoListMenu() {
 void Menu::ShowToDoList() {
     todolist.outputFile();
 }
+
+
+string Menu::ToUpper(string &str) {
+    for (auto& chr: str) {
+        chr = toupper(chr);
+    }
+    return str;
+}
+
+
+string Menu::TaskNameInput() {
+    // Name field
+    string name;
+    // Flag
+    while (true) {
+        cout << "Enter the task name: \n";
+        if (cin >> name) {
+            break;
+        }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return name;
+}
+
+
+Date Menu::DateInput() {
+    int day, month, year;
+
+    while (true) {
+        // Outputs to the user
+        cout << "Enter the day (1 - 31): ";
+        // If the input stream is not correct output error message and clear input stream, restarting the loop
+        if (!(cin >> day)) {
+            cout << "Invalid input for day. Please enter a number.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        cout << "Enter the month (1 - 12): ";
+        if (!(cin >> month)) {
+            cout << "Invalid input for month. Please enter a number.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        cout << "Enter the year (>= 1): ";
+        if (!(cin >> year)) {
+            cout << "Invalid input for year. Please enter a number.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        // Try to create a valid date
+        try {
+            Date testDate(day, month, year);
+            return testDate;
+        } catch (const InvalidDate& e) {
+            cout << "Caught exception: " << e.what() << '\n';
+            cout << "Try again with a valid date.\n";
+        }
+
+        // Clear input state and ignore rest of line for clean retry
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
+
+
+string Menu::TaskPriorityInput() {
+    // Name field
+    string priority;
+    // Flag
+    while (true) {
+        cout << "Enter the task priority (HIGH | NORMAL | LOW - case insensitive): \n";
+        if (cin >> priority && (ToUpper(priority) == "HIGH" || ToUpper(priority) == "NORMAL" ||
+            ToUpper(priority) == "LOW")) {
+            break;
+        }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return priority;
+}
+
+
+string Menu::TaskStatusInput() {
+    // Name field
+    string status;
+    // Flag
+    while (true) {
+        cout << "Enter the task priority (IN PROGRESS | TODO - case insensitive): \n";
+        if (cin >> status && (ToUpper(status) == "IN PROGRESS" || ToUpper(status) == "TODO")) {
+            break;
+            }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return status;
+}
+
+
+void Menu::AddTask() {
+    // Get task name
+    string name = TaskNameInput();
+    // Get task date
+    Date date = DateInput();
+    // Get task priority
+    string priority = TaskPriorityInput();
+    // Get task status
+    string status = TaskStatusInput();
+    // Create new task object
+    Task task(name, date, priority, status);
+    currentTask = task;
+    // Add task to todolist
+    todolist.addTask(currentTask);
+    todolist.saveFile();
+}
+
+

@@ -38,6 +38,10 @@ int main() {
             // Show ToDoList
             menu.ShowToDoList();
         }
+        if (userToDoListMenu == ADD) {
+            // Add new task to ToDoList
+            menu.AddTask();
+        }
         // Show menu again and restart the loop
         userToDoListMenu = menu.ToDoListMenu();
     }

@@ -33,10 +33,25 @@ public:
     int ToDoListMenu();
     // Show ToDoList
     void ShowToDoList();
+    // Add task to ToDoList via menu
+    void AddTask();
+
+
+
+
+
+
+    // Auxiliary functions
+    static string TaskNameInput();
+    static Date DateInput();
+    static string TaskPriorityInput();
+    static string TaskStatusInput();
+    static string ToUpper(string& str);
 private:
     map<int, string> existingLists;
     string listName;
     ToDoList todolist;
+    Task currentTask;
 };
 
 #endif //MENU_HPP

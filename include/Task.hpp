@@ -5,8 +5,9 @@
 
 class Task {
 public:
+    Task();
     // Constructor with parameters
-    Task(const std::string& name, Date due, std::string priority, std::string stat);
+    Task(std::string& name, Date& due, std::string& priority, std::string& stat);
     // Normalise string
     static void to_upper_string(std::string& str);
     // For testing purposes

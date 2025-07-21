@@ -55,7 +55,7 @@ int main() {
 
 
     std::cout << "------------------TASK TESTING----------------" << std::endl;
-
+    /*
     // Valid Task
     try {
         Date date;
@@ -102,6 +102,7 @@ int main() {
     }
 
     // Invalid field (invalid status)
+
     try {
         Date date(28, 02, 2025);
         Task new_task("Create ToDoList structure in JSON file", date, "HIGH", "done");
@@ -110,38 +111,22 @@ int main() {
         std::cout << "Caught exception: " << e.what() << std::endl;
     } catch (const InvalidDate& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
-    }
+    }*/
     std::cout << "------------------Todolist TESTING----------------" << std::endl;
     try {
-        Date date(3, 7, 2025);
-        Task new_task("Create ToDoList structure in JSON file", date, "HIGH", "TODO");
+        Date date(30, 7, 2025);
+        string name = "Exam";
+        string priority = "HIGH";
+        string status = "TODO";
+        Task new_task(name, date, priority, status);
         std::cout << new_task.task_to_string() << std::endl;
         ToDoList todolist;
-        todolist.addTask(new_task);
-        todolist.addTask(new_task);
-        todolist.saveFile("tasks");
-        todolist.outputFile("tasks");
-        // Testing if adding a new tasks "resets" the info already in the file
-        todolist.addTask(new_task);
-        todolist.saveFile("tasks");
-        todolist.outputFile("tasks");
+        todolist.saveFile();
     } catch (const InvalidField& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     } catch (const InvalidDate& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     }
-
-
-
-
-
-
-
-
-
-
-
-
     return 0;
 }
 

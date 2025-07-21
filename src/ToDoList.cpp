@@ -20,11 +20,11 @@ ToDoList::ToDoList(string &filename) {
 void ToDoList::addTask(const Task &task){
     // Creates a json object containing task values
     json currentTask {
-        {"taskName", task.getTaskName()},
-        {"dueDate", task.getDueDate().date_to_string()},
-        {"taskPriority", task.getTaskPriority()},
-        {"taskStatus", task.getTaskStatus()},
-    };
+            {"taskName", task.getTaskName()},
+            {"dueDate", task.getDueDate().date_to_string()},
+            {"taskPriority", task.getTaskPriority()},
+            {"taskStatus", task.getTaskStatus()},
+        };
     // Document is a json array that stores all tasks of that file
     document.push_back(currentTask);
 }
@@ -50,7 +50,3 @@ void ToDoList::outputFile() {
         std::cout << item.dump(4) << std::endl;
     }
 }
-
-
-
-

@@ -16,6 +16,8 @@ public:
     ToDoList();
     // Copy constructor from a file
     ToDoList(string& filename);
+    // Parse file
+    void ParseFile();
     // Add new task to JSON file
     void addTask(const Task& task);
     // Save info in file
@@ -29,10 +31,10 @@ public:
     // Change task fields, for example priority changed, task status, completion
 
     // Remove tasks
-
 private:
     json document;
     std::string fileName;
+
 };
 
 #endif
