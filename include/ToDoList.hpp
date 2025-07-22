@@ -5,25 +5,25 @@
 
 #include "Task.hpp"
 #include <string>
-// Lib to work with JSON file in C++
-#include <json.hpp>
 using std::string;
-using json = nlohmann::json;
+using std::vector;
 
 class ToDoList {
 public:
     // Create empty JSON array of tasks
     ToDoList();
     // Copy constructor from a file
-    ToDoList(string& filename);
-    // Parse file
+    ToDoList(const string& filename);
+    // Write CSV header if the file is empty
+    void WriteHeader();
+    // Parse CSV file
     void ParseFile();
     // Add new task to JSON file
-    void addTask(const Task& task);
+    void AddTask(const Task& task);
     // Save info in file
-    void saveFile();
+    void SaveToFile();
     // Parse JSON array in file
-    void outputFile();
+    void OutputTasks();
     // Create static functions capable of sorting the JSON array based on different parameters
     // For example, sort the array by alphabetic order, priority or even date
 
@@ -31,9 +31,12 @@ public:
     // Change task fields, for example priority changed, task status, completion
 
     // Remove tasks
+
+    // Auxiliary functions
+    static vector<string> GetFieldVector(string& line);
 private:
-    json document;
-    std::string fileName;
+    std::string filePath;
+    std::vector<Task> fileTasks;
 
 };
 

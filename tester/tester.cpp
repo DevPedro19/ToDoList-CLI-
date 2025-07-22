@@ -111,7 +111,7 @@ int main() {
         std::cout << "Caught exception: " << e.what() << std::endl;
     } catch (const InvalidDate& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
-    }*/
+    }
     std::cout << "------------------Todolist TESTING----------------" << std::endl;
     try {
         Date date(30, 7, 2025);
@@ -127,6 +127,9 @@ int main() {
     } catch (const InvalidDate& e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     }
-    return 0;
+    return 0;*/
+    std::cout << "------------------CSV TESTING----------------" << std::endl;
+    ToDoList todolist("tasks");
+
 }
 

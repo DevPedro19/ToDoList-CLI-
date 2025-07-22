@@ -1,52 +1,98 @@
 #include "ToDoList.hpp"
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
-ToDoList::ToDoList() {
-    document = json::array();
+using std::ifstream;
+using std::ofstream;
+using std::filesystem::is_empty;
+using std::getline;
+using std::vector;
+
+
+// Trivial constructor
+ToDoList::ToDoList() = default;
+
+
+ToDoList::ToDoList(const string &filename) {
+    filePath = "../lists/" + filename + ".csv";
+    // Writes the header in the CSV
+    WriteHeader();
+    // Parse current file
+    ParseFile();
+
 }
 
-ToDoList::ToDoList(string &filename) {
-    // Input file with corresponding filepath
-    std::ifstream inputFile("../lists/" + filename + ".json");
-    // Parsed Input File and saved in Doc json variable
-    json Doc{json::parse(inputFile)};
-    // document is now the parsed Doc
-    document = Doc;
-    fileName = filename;
-}
 
-
-void ToDoList::addTask(const Task &task){
-    // Creates a json object containing task values
-    json currentTask {
-            {"taskName", task.getTaskName()},
-            {"dueDate", task.getDueDate().date_to_string()},
-            {"taskPriority", task.getTaskPriority()},
-            {"taskStatus", task.getTaskStatus()},
-        };
-    // Document is a json array that stores all tasks of that file
-    document.push_back(currentTask);
-}
-
-void ToDoList::saveFile() {
-    // Create an object capable of writing JSON info to a JSON file, in append mode, so it doesn't erase previous info
-    // It will be saved in the sub directory lists
-    std::ofstream outputFile("../lists/" + fileName + ".json");
-    // Output with correct indent (using dump method)
-    outputFile << document.dump(4);
-}
-
-void ToDoList::outputFile() {
-    std::ifstream inputFile("../lists/" + fileName + ".json");
-    // Creates an iterable object of type JSON to get data and pretty print the tasks to the console
-    // jsonData works like a c++ style array
-    json jsonData;
-    // Parsed file is now in the object
-    inputFile >> jsonData;
-    // Output pretty-printing the result
-    std::cout << "LIST: " << fileName << std::endl;
-    for (const auto& item: jsonData) {
-        std::cout << item.dump(4) << std::endl;
+void ToDoList::WriteHeader() {
+    // Checks if the file is empty
+    if (is_empty(filePath)) {
+        // Writes the CSV Header
+        ofstream ofs(filePath);
+        // Write to the file
+        ofs << "Name, Due Date, Priority, Status";
     }
 }
+
+
+vector<string> ToDoList::GetFieldVector(string& line) {
+    vector<string> fields;
+    // Parse individual fields (I've already coded something like this before... a split or smth)
+    size_t commaPosition = line.find(',');
+    size_t startPosition = 0;
+    while (commaPosition != string::npos) {
+        // Get substring between previous comma and next comma
+        string substring = line.substr(startPosition, commaPosition - startPosition);
+        // Pushback to the vector
+        fields.push_back(substring);
+        // Start position is now the next char after the comma and the space, and thus the +2
+        startPosition = commaPosition + 2;
+        // Restart the search, updating the condition inside the loop
+        commaPosition = line.find(',', startPosition);
+    }
+    // last field
+    string last = line.substr(startPosition, line.length() - startPosition);
+    fields.push_back(last);
+    return fields;
+}
+
+
+
+void ToDoList::ParseFile() {
+    // Create a parser for CSV files
+    // Input filestream
+    ifstream ifs(filePath);
+    // Current line
+    string line;
+    bool first_line = true;
+    while (getline(ifs, line)) {
+        // If the line is not the header or it doesn't contain any of the header names
+        vector<string> fields;
+        if (!first_line || line.find("Name") == string::npos) {
+            fields = GetFieldVector(line);
+        }
+        first_line = false;
+        // Task fields
+        string name = fields[0];
+        // Have to code new constructor for Date and change some things
+        string date = fields[1];
+        string priority = fields[2];
+        string status = fields[3];
+    }
+}
+
+
+
+void ToDoList::AddTask(const Task &task){
+    // Add new task to file
+}
+
+
+void ToDoList::SaveToFile() {
+
+}
+
+void ToDoList::OutputTasks() {
+
+}
+

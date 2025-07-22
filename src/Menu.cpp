@@ -114,7 +114,7 @@ void Menu::FindToDoList() {
 
 void Menu::DeleteToDoList() {
     // Path of selected list, corresponding to the variable listName
-    string path = "../lists/" + listName + ".json";
+    string path = "../lists/" + listName + ".csv";
     // Using the filesystem function remove to remove the file based on its filepath
     remove(path);
 }
@@ -153,7 +153,7 @@ int Menu::ToDoListMenu() {
 
 
 void Menu::ShowToDoList() {
-    todolist.outputFile();
+    // Rewrite this
 }
 
 
@@ -276,8 +276,6 @@ void Menu::AddTask() {
     Task task(name, date, priority, status);
     currentTask = task;
     // Add task to todolist
-    todolist.addTask(currentTask);
-    todolist.saveFile();
 }
 
 
