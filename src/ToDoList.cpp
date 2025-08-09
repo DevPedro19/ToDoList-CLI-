@@ -1,6 +1,6 @@
 #include "ToDoList.hpp"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <filesystem>
 
 using std::ifstream;
@@ -8,6 +8,8 @@ using std::ofstream;
 using std::filesystem::is_empty;
 using std::getline;
 using std::vector;
+using std::istringstream;
+using std::cout;
 
 
 // Trivial constructor
@@ -20,7 +22,6 @@ ToDoList::ToDoList(const string &filename) {
     WriteHeader();
     // Parse current file
     ParseFile();
-
 }
 
 
@@ -57,6 +58,15 @@ vector<string> ToDoList::GetFieldVector(string& line) {
 }
 
 
+Date ToDoList::ParseDate(string& date) {
+    char sep1, sep2;
+    int day, month, year;
+    istringstream iss(date);
+    iss >> day >> sep1 >> month >> sep2 >> year;
+    return {day, month, year};
+}
+
+
 
 void ToDoList::ParseFile() {
     // Create a parser for CSV files
@@ -66,7 +76,7 @@ void ToDoList::ParseFile() {
     string line;
     bool first_line = true;
     while (getline(ifs, line)) {
-        // If the line is not the header or it doesn't contain any of the header names
+        // If the line is not the header, or it doesn't contain any of the header names
         vector<string> fields;
         if (!first_line || line.find("Name") == string::npos) {
             fields = GetFieldVector(line);
@@ -74,25 +84,38 @@ void ToDoList::ParseFile() {
         first_line = false;
         // Task fields
         string name = fields[0];
-        // Have to code new constructor for Date and change some things
-        string date = fields[1];
+        string dateStr = fields[1];
+        // Correctly parsed date to use the constructor
+        Date date = ParseDate(dateStr);
         string priority = fields[2];
         string status = fields[3];
+        // Create new task (constructor to implement)
+        auto newTask = Task(name, date, priority, status);
+        // Add task to the vector of the class
+        fileTasks.push_back(newTask);
     }
 }
 
 
-
+// Add new task to file
 void ToDoList::AddTask(const Task &task){
-    // Add new task to file
+    fileTasks.push_back(task);
 }
 
-
+// Save info in file
 void ToDoList::SaveToFile() {
-
+    ofstream output(filePath);
+    for (auto& task : fileTasks) {
+        output << task.task_to_string() << '\n';
+    }
 }
 
+// Pretty print the current tasks
 void ToDoList::OutputTasks() {
-
+    cout << "===== Tasks in file =====\n";
+    for (auto& task : fileTasks) {
+        cout << task.task_to_string() << '\n';
+    }
+    cout << '\n';
 }
 

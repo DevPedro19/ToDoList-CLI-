@@ -35,12 +35,6 @@ public:
     void ShowToDoList();
     // Add task to ToDoList via menu
     void AddTask();
-
-
-
-
-
-
     // Auxiliary functions
     static string TaskNameInput();
     static Date DateInput();

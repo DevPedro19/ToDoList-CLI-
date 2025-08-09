@@ -13,12 +13,14 @@ public:
     // Create empty JSON array of tasks
     ToDoList();
     // Copy constructor from a file
-    ToDoList(const string& filename);
+    explicit ToDoList(const string& filename);
     // Write CSV header if the file is empty
     void WriteHeader();
     // Parse CSV file
     void ParseFile();
-    // Add new task to JSON file
+    // Parse Date
+    static Date ParseDate(string& date);
+    // Add new task to CSV file
     void AddTask(const Task& task);
     // Save info in file
     void SaveToFile();

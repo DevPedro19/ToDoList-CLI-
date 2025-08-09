@@ -32,7 +32,9 @@ int main() {
         menu.DeleteToDoList();
     }
 
-    while (userToDoListMenu != TD_EXIT) {
+
+    // Only executes the loop if previous user inputs were not to exit the program
+    while (userToDoListMenu != TD_EXIT && userIntroMenu != INTRO_EXIT && userSelectMenu != SELECT_EXIT) {
         // User Selection for ToDoList Menu
         if (userToDoListMenu == SHOW) {
             // Show ToDoList

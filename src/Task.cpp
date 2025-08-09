@@ -32,7 +32,8 @@ Task::Task(std::string& name, Date& due, std::string& priority, std::string& sta
 
 std::string Task::task_to_string() const {
     ostringstream out;
-    out << taskName << " | " << dueDate.date_to_string() << " | " << taskPriority << " | " << taskStatus;
+    // Using commas because it will be useful to write in a CSV
+    out << taskName << ", " << dueDate.date_to_string() << ", " << taskPriority << ", " << taskStatus;
     return out.str();
 }
 

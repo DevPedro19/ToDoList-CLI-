@@ -52,7 +52,7 @@ void Menu::ToDoListMap() {
         // Last index to trim fileName
         size_t end = fileName.find_last_of('.');
         // Get substring based on previous indexes
-        fileName = fileName.substr(start + 1, fileName.length() - end);
+        fileName = fileName.substr(start + 1, fileName.length() - end + 1);
         // Output fileName
         listNames.insert({index, fileName});
         index++;
@@ -153,7 +153,7 @@ int Menu::ToDoListMenu() {
 
 
 void Menu::ShowToDoList() {
-    // Rewrite this
+    todolist.OutputTasks();
 }
 
 
@@ -262,7 +262,6 @@ string Menu::TaskStatusInput() {
     return status;
 }
 
-
 void Menu::AddTask() {
     // Get task name
     string name = TaskNameInput();
@@ -276,6 +275,9 @@ void Menu::AddTask() {
     Task task(name, date, priority, status);
     currentTask = task;
     // Add task to todolist
+    todolist.AddTask(currentTask);
+    // After each change we update the contents of the CSV file
+    todolist.SaveToFile();
 }
 
 
