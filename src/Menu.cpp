@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 #include <filesystem>
+#include <fstream>
 #include "InvalidDate.hpp"
 
 
@@ -15,6 +16,9 @@ using std::numeric_limits;
 using std::streamsize;
 using std::filesystem::remove;
 using std::toupper;
+using std::ofstream;
+using std::filesystem::exists;
+using std::cout;
 
 Menu::Menu() {}
 
@@ -52,13 +56,14 @@ void Menu::ToDoListMap() {
         // Last index to trim fileName
         size_t end = fileName.find_last_of('.');
         // Get substring based on previous indexes
-        fileName = fileName.substr(start + 1, fileName.length() - end + 1);
+        fileName = fileName.substr(start + 1, end - start - 1);
         // Output fileName
         listNames.insert({index, fileName});
         index++;
     }
     existingLists = listNames;
 }
+
 
 int Menu::SelectMenu() {
     cout << "===== Existing ToDoLists =====\n";
@@ -73,12 +78,13 @@ int Menu::SelectMenu() {
     cout << "===== ToDoLists MENU =====\n";
     cout << "1. Select ToDoList\n";
     cout << "2. Delete ToDoList\n";
-    cout << "3. EXIT\n";
+    cout << "3. Add ToDoList\n";
+    cout << "4. EXIT\n";
 
     int userOption;
     while (true) {
-        cout << "Enter user option (1 | 2 | 3): ";
-        if (cin >> userOption && (userOption == SELECT || userOption == DELETE || userOption == SELECT_EXIT)) {
+        cout << "Enter user option (1 | 2 | 3 | 4): ";
+        if (cin >> userOption && (userOption == SELECT || userOption == DELETE || userOption == ADD_LIST || userOption == SELECT_EXIT)) {
             break;
         }
         cout << "Invalid input. Please enter a valid option.\n";
@@ -113,10 +119,40 @@ void Menu::FindToDoList() {
 
 
 void Menu::DeleteToDoList() {
-    // Path of selected list, corresponding to the variable listName
-    string path = "../lists/" + listName + ".csv";
     // Using the filesystem function remove to remove the file based on its filepath
     remove(path);
+    // Remove from existingLists
+    // We have to use iterators (the loop will run while it's not past the last element
+    for (auto iter = existingLists.begin(); iter != existingLists.end(); ++iter) {
+        if (iter->second == listName) {
+            // erase makes the current iter invalid and proceeds to the next one that's valid
+            iter = existingLists.erase(iter);
+        }
+    }
+}
+
+
+void Menu::AddNewToDoList() {
+    // Name field
+    string name;
+    while (true) {
+        cout << "Enter the ToDoList name: ";
+        // If the string is valid and the file doesn't exist
+        // TODO: find a way to read multiple words that don't stop in the whitespace
+        if (cin >> name && !exists("../lists/" + name + ".csv")) {
+            // Create a new file
+            ofstream out("../lists/" + name + ".csv");
+            // Add it to existing lists
+            // last corresponds to the last pair in the map (that's why rbegin is used)
+            auto last = existingLists.rbegin();
+            // Then we just simply insert a new key-value pair
+            existingLists[last->first + 1] = name;
+            break;
+        }
+        cout << "File already exists. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
 }
 
 
@@ -171,6 +207,7 @@ string Menu::TaskNameInput() {
     // Flag
     while (true) {
         cout << "Enter the task name: \n";
+        // TODO: find a way to read multiple words that don't stop in the whitespace
         if (cin >> name) {
             break;
         }
@@ -229,13 +266,25 @@ Date Menu::DateInput() {
 
 
 string Menu::TaskPriorityInput() {
-    // Name field
+    // User input
+    int user;
+    // Priority string
     string priority;
-    // Flag
     while (true) {
-        cout << "Enter the task priority (HIGH | NORMAL | LOW - case insensitive): \n";
-        if (cin >> priority && (ToUpper(priority) == "HIGH" || ToUpper(priority) == "NORMAL" ||
-            ToUpper(priority) == "LOW")) {
+        cout << "Enter the task priority (1 - HIGH | 2 - NORMAL | 3 - LOW - case insensitive): \n";
+        if (cin >> user && user >= 1 && user <= 3) {
+            // Switch case to handle different options
+            switch (user) {
+                case 1:
+                    priority = "HIGH";
+                    break;
+                case 2:
+                    priority = "NORMAL";
+                    break;
+                default:
+                    priority = "LOW";
+                    break;
+            }
             break;
         }
         cout << "Invalid input. Please enter a valid option.\n";
@@ -247,20 +296,30 @@ string Menu::TaskPriorityInput() {
 
 
 string Menu::TaskStatusInput() {
+    int user;
     // Name field
     string status;
-    // Flag
     while (true) {
-        cout << "Enter the task priority (IN PROGRESS | TODO - case insensitive): \n";
-        if (cin >> status && (ToUpper(status) == "IN PROGRESS" || ToUpper(status) == "TODO")) {
-            break;
+        cout << "Enter the task priority (1 - IN PROGRESS | 2 - TODO - case insensitive): \n";
+        if (cin >> user && user >= 1 && user <= 2) {
+            // Switch case to handle different options
+            switch (user) {
+                case 1:
+                    status = "IN PROGRESS";
+                    break;
+                default:
+                    status = "TODO";
+                    break;
             }
+            break;
+        }
         cout << "Invalid input. Please enter a valid option.\n";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     return status;
 }
+
 
 void Menu::AddTask() {
     // Get task name
@@ -279,5 +338,7 @@ void Menu::AddTask() {
     // After each change we update the contents of the CSV file
     todolist.SaveToFile();
 }
+
+// TODO: Create the remaining menus
 
 

@@ -1,7 +1,6 @@
 #ifndef TASK_H
 #define TASK_H
 #include "Date.hpp"
-// TODO : implement the rest of the class
 
 class Task {
 public:

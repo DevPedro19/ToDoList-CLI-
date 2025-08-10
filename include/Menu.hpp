@@ -12,8 +12,9 @@ using std::string;
 
 // Enums for different MENUS (in Menu.hpp so it can used inside the class and also in main.cpp)
 enum IntroMenu{CHECK = 1, INTRO_EXIT = 2};
-enum SelectMenu {SELECT = 1, DELETE = 2, SELECT_EXIT = 3 };
+enum SelectMenu {SELECT = 1, DELETE = 2, ADD_LIST = 3, SELECT_EXIT = 4 };
 enum ToDoListMenu{SHOW = 1, ADD = 2, ORDER = 3, REMOVE = 4, EDIT = 5, TD_EXIT = 6};
+enum Priority{HIGH = 1, NORMAL = 2, LOW = 3};
 
 class Menu {
 public:
@@ -21,7 +22,7 @@ public:
     Menu();
     // Intro menu
     int IntroMenu();
-    // Creates a vector containing ToDoList .json files
+    // Creates a vector containing ToDoList .csv files
     void ToDoListMap();
     // Selection Menu
     int SelectMenu();
@@ -29,6 +30,8 @@ public:
     void FindToDoList();
     // Delete the corresponding ToDoList
     void DeleteToDoList();
+    // Add a new ToDoList
+    void AddNewToDoList();
     // Enter the ToDoList to proceed with other operations
     int ToDoListMenu();
     // Show ToDoList
@@ -46,6 +49,7 @@ private:
     string listName;
     ToDoList todolist;
     Task currentTask;
+    string path = "../lists/" + listName + ".csv";
 };
 
 #endif //MENU_HPP

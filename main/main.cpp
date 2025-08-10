@@ -18,18 +18,28 @@ int main() {
 
     int userToDoListMenu = 0;
 
-    // User selection for select menu
-    if (userSelectMenu == SELECT) {
-        // Find corresponding list
-        menu.FindToDoList();
-        userToDoListMenu = menu.ToDoListMenu();
-    }
+    // This loop will only repeat if we are doing add or delete
+    while (userSelectMenu != SELECT_EXIT && userIntroMenu != INTRO_EXIT) {
+        // User selection for select menu
+        if (userSelectMenu == SELECT) {
+            // Find corresponding list
+            menu.FindToDoList();
+            userToDoListMenu = menu.ToDoListMenu();
+            break;
+        }
 
-    if (userSelectMenu == DELETE) {
-        // Find corresponding list
-        menu.FindToDoList();
-        // Delete list
-        menu.DeleteToDoList();
+        if (userSelectMenu == DELETE) {
+            // Find corresponding list
+            menu.FindToDoList();
+            // Delete list
+            menu.DeleteToDoList();
+        }
+
+        if (userSelectMenu == ADD_LIST) {
+            // Creates a new ToDoList
+            menu.AddNewToDoList();
+        }
+        userSelectMenu = menu.SelectMenu();
     }
 
 

@@ -119,3 +119,7 @@ void ToDoList::OutputTasks() {
     cout << '\n';
 }
 
+// TODO: Create overloads to sort the tasks to be displayed
+
+// TODO: Create functions that use those overloads to sort tasks inside a ToDoList object
+
