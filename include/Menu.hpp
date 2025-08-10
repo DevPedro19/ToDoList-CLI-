@@ -28,6 +28,8 @@ public:
     int SelectMenu();
     // Find the corresponding list
     void FindToDoList();
+    // Checks if the name already exists
+    bool FoundName(string& name);
     // Delete the corresponding ToDoList
     void DeleteToDoList();
     // Add a new ToDoList
@@ -43,13 +45,14 @@ public:
     static Date DateInput();
     static string TaskPriorityInput();
     static string TaskStatusInput();
-    static string ToUpper(string& str);
 private:
     map<int, string> existingLists;
-    string listName;
+    // Current list index
+    int currentListIndex;
+    // Current List name
+    string currentListName;
     ToDoList todolist;
     Task currentTask;
-    string path = "../lists/" + listName + ".csv";
 };
 
 #endif //MENU_HPP

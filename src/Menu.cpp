@@ -94,22 +94,24 @@ int Menu::SelectMenu() {
     return userOption;
 }
 
+
+// TODO: Change listName to a vector that contains all ToDolist names available
 void Menu::FindToDoList() {
-    int listIndex = 0;
+    int user = 0;
     cout << "Enter ToDoList associated number (In Existing ToDoLists Menu): ";
     while (true) {
         // Get iterator if ToDoList is selected
-        if (cin >> listIndex) {
-            auto found = existingLists.find(listIndex);
+        if (cin >> user) {
+            auto found = existingLists.find(user);
             if (found != existingLists.end()) {
-                listName = found->second;
+                currentListIndex = found->first;
+                currentListName = found->second;
                 break;
             }
             cout << "Not found try again.\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
-
         }
         cout << "Invalid input. Please enter a valid option.\n";
         cin.clear();
@@ -120,15 +122,20 @@ void Menu::FindToDoList() {
 
 void Menu::DeleteToDoList() {
     // Using the filesystem function remove to remove the file based on its filepath
-    remove(path);
+    remove("../lists/" + currentListName + ".csv");
     // Remove from existingLists
-    // We have to use iterators (the loop will run while it's not past the last element
-    for (auto iter = existingLists.begin(); iter != existingLists.end(); ++iter) {
-        if (iter->second == listName) {
-            // erase makes the current iter invalid and proceeds to the next one that's valid
-            iter = existingLists.erase(iter);
+    existingLists.erase(currentListIndex);
+}
+
+
+bool Menu::FoundName(string& name) {
+    bool found = false;
+    for (auto& pair: existingLists) {
+        if (pair.second == name) {
+            found = true;
         }
     }
+    return found;
 }
 
 
@@ -138,8 +145,10 @@ void Menu::AddNewToDoList() {
     while (true) {
         cout << "Enter the ToDoList name: ";
         // If the string is valid and the file doesn't exist
-        // TODO: find a way to read multiple words that don't stop in the whitespace
-        if (cin >> name && !exists("../lists/" + name + ".csv")) {
+        /* When using getline we have to make sure that the input stream is clear
+         * because cin leaves any newline or space behind so we have to skip it so we use cin.ignore*/
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (getline(cin, name) && !FoundName(name)) {
             // Create a new file
             ofstream out("../lists/" + name + ".csv");
             // Add it to existing lists
@@ -158,9 +167,9 @@ void Menu::AddNewToDoList() {
 
 int Menu::ToDoListMenu() {
     // Update todolist object so we can execute method's from ToDoList class in following methods of the class
-    todolist = ToDoList(listName);
+    todolist = ToDoList(currentListName);
 
-    cout << "===== " << listName << " =====\n";
+    cout << "===== " << currentListName << " =====\n";
     // Options from the menu
     cout << "1. Show tasks\n";
     cout << "2. Add task\n";
@@ -193,22 +202,16 @@ void Menu::ShowToDoList() {
 }
 
 
-string Menu::ToUpper(string &str) {
-    for (auto& chr: str) {
-        chr = toupper(chr);
-    }
-    return str;
-}
-
-
 string Menu::TaskNameInput() {
     // Name field
     string name;
     // Flag
     while (true) {
-        cout << "Enter the task name: \n";
-        // TODO: find a way to read multiple words that don't stop in the whitespace
-        if (cin >> name) {
+        cout << "Enter the task name: ";
+        /* When using getline we have to make sure that the input stream is clear
+         * because cin leaves any newline or space behind so we have to skip it so we use cin.ignore*/
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (getline(cin, name)) {
             break;
         }
         cout << "Invalid input. Please enter a valid option.\n";
@@ -271,7 +274,7 @@ string Menu::TaskPriorityInput() {
     // Priority string
     string priority;
     while (true) {
-        cout << "Enter the task priority (1 - HIGH | 2 - NORMAL | 3 - LOW - case insensitive): \n";
+        cout << "Enter the task priority (1 - HIGH | 2 - NORMAL | 3 - LOW): \n";
         if (cin >> user && user >= 1 && user <= 3) {
             // Switch case to handle different options
             switch (user) {
@@ -300,7 +303,7 @@ string Menu::TaskStatusInput() {
     // Name field
     string status;
     while (true) {
-        cout << "Enter the task priority (1 - IN PROGRESS | 2 - TODO - case insensitive): \n";
+        cout << "Enter the task priority (1 - IN PROGRESS | 2 - TODO): \n";
         if (cin >> user && user >= 1 && user <= 2) {
             // Switch case to handle different options
             switch (user) {

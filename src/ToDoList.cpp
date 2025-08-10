@@ -31,7 +31,7 @@ void ToDoList::WriteHeader() {
         // Writes the CSV Header
         ofstream ofs(filePath);
         // Write to the file
-        ofs << "Name, Due Date, Priority, Status";
+        ofs << "Name, Due Date, Priority, Status \n";
     }
 }
 
@@ -76,23 +76,22 @@ void ToDoList::ParseFile() {
     string line;
     bool first_line = true;
     while (getline(ifs, line)) {
-        // If the line is not the header, or it doesn't contain any of the header names
         vector<string> fields;
-        if (!first_line || line.find("Name") == string::npos) {
+        if (!first_line) {
             fields = GetFieldVector(line);
+            // Task fields
+            string name = fields[0];
+            string dateStr = fields[1];
+            // Correctly parsed date to use the constructor
+            Date date = ParseDate(dateStr);
+            string priority = fields[2];
+            string status = fields[3];
+            // Create new task (constructor to implement)
+            auto newTask = Task(name, date, priority, status);
+            // Add task to the vector of the class
+            fileTasks.push_back(newTask);
         }
         first_line = false;
-        // Task fields
-        string name = fields[0];
-        string dateStr = fields[1];
-        // Correctly parsed date to use the constructor
-        Date date = ParseDate(dateStr);
-        string priority = fields[2];
-        string status = fields[3];
-        // Create new task (constructor to implement)
-        auto newTask = Task(name, date, priority, status);
-        // Add task to the vector of the class
-        fileTasks.push_back(newTask);
     }
 }
 
@@ -104,10 +103,9 @@ void ToDoList::AddTask(const Task &task){
 
 // Save info in file
 void ToDoList::SaveToFile() {
-    ofstream output(filePath);
-    for (auto& task : fileTasks) {
-        output << task.task_to_string() << '\n';
-    }
+    ofstream output(filePath, std::ios::app);
+    // Only write to the file the last task
+    output << fileTasks.back().task_to_string() << '\n';
 }
 
 // Pretty print the current tasks
