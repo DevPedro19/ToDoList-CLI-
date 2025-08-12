@@ -22,8 +22,6 @@ public:
     static Date ParseDate(string& date);
     // Add new task to CSV file
     void AddTask(const Task& task);
-    // Save info in file
-    void SaveToFile();
     // Parse JSON array in file
     void OutputTasks();
     // Order alphabetically
@@ -36,10 +34,10 @@ public:
     void PriorityOrder();
     // Order by status (to_do in front of in process)
     void StatusOrder();
-    // Change task fields, for example priority changed, task status, completion
-
     // Remove tasks
-
+    size_t getTodolistSize();
+    void DeleteTask(size_t& user);
+    // TODO: Change task fields, for example priority changed, task status, completion
     // Auxiliary functions
     static vector<string> GetFieldVector(string& line);
 private:

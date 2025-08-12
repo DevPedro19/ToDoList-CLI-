@@ -181,6 +181,7 @@ int Menu::ToDoListMenu() {
     cout << "===== " << currentListName << " =====\n";
     // Options from the menu
     cout << "1. Show tasks\n";
+    // Add new task
     cout << "2. Add task\n";
     // Order ToDoList based on different criteria
     cout << "3. Order\n";
@@ -344,52 +345,77 @@ void Menu::AddTask() {
     string status = TaskStatusInput();
     // Create new task object
     Task task(name, date, priority, status);
-    currentTask = task;
-    // Add task to todolist
-    todolist.AddTask(currentTask);
-    // After each change we update the contents of the CSV file
-    todolist.SaveToFile();
+    todolist.AddTask(task);
 }
 
 
 // TODO: Create the remaining menus
 // Order menu according to parameter
 void Menu::OrderTasks() {
-    int user;
-    while (true) {
-        cout << "Enter the ordering option (1 - Alphabetic order | 2 - Oldest to Newest | 3 - Newest to oldest |"
-                " 4 - Priority | 5 - Status): \n";
-        if (cin >> user && user >= 1 && user <= 5) {
-            // Switch case to handle different options
-            switch (user) {
-                case 1:
-                    todolist.AlphabeticOrder();
-                    // Alphabetic order
-                    break;
-                case 2:
-                    // Ascending due date
-                    todolist.AscendingDate();
-                    break;
-                case 3:
-                    // Descending due date
-                    todolist.DescendingDate();
-                    break;
-                case 4:
-                    // Priority
-                    todolist.PriorityOrder();
-                    break;
-                default:
-                    todolist.StatusOrder();
-                    // Status
-                    break;
+    if (todolist.getTodolistSize() != 0) {
+        int user;
+        while (true) {
+            cout << "Enter the ordering option (1 - Alphabetic order | 2 - Oldest to Newest | 3 - Newest to oldest |"
+                    " 4 - Priority | 5 - Status): \n";
+            if (cin >> user && user >= 1 && user <= 5) {
+                // Switch case to handle different options
+                switch (user) {
+                    case 1:
+                        todolist.AlphabeticOrder();
+                        // Alphabetic order
+                        break;
+                    case 2:
+                        // Ascending due date
+                        todolist.AscendingDate();
+                        break;
+                    case 3:
+                        // Descending due date
+                        todolist.DescendingDate();
+                        break;
+                    case 4:
+                        // Priority
+                        todolist.PriorityOrder();
+                        break;
+                    default:
+                        todolist.StatusOrder();
+                        // Status
+                        break;
+                }
+                ShowToDoList();
+                break;
             }
-            ShowToDoList();
-            break;
+            cout << "Invalid input. Please enter a valid option.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
-        cout << "Invalid input. Please enter a valid option.\n";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    else {
+        cout << "No tasks found, unable to order. Let's first add some tasks\n";
     }
 }
+
+
+void Menu::DeleteTask() {
+    if (todolist.getTodolistSize() != 0) {
+        // User is like this to get indexable value
+        size_t user;
+        while (true) {
+            cout << "Enter the task number (to be deleted): ";
+            // Make sure it's in the range
+            if (cin >> user && user >= 1 && user <= todolist.getTodolistSize() + 1) {
+                // Delete task from ToDoList and File
+                todolist.DeleteTask(user);
+                break;
+            }
+            cout << "Invalid input. Please enter a valid option.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+    else {
+        cout << "No tasks found, unable to delete. Let's first add some tasks\n";
+    }
+}
+
 
 

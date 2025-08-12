@@ -42,6 +42,8 @@ public:
     void AddTask();
     // Order menu
     void OrderTasks();
+    // Delete task
+    void DeleteTask();
     // Auxiliary functions
     static string TaskNameInput();
     static Date DateInput();
@@ -54,7 +56,6 @@ private:
     // Current List name
     string currentListName;
     ToDoList todolist;
-    Task currentTask;
 };
 
 #endif //MENU_HPP

@@ -58,6 +58,11 @@ int main() {
         if (userToDoListMenu == ORDER) {
             menu.OrderTasks();
         }
+        if (userToDoListMenu == REMOVE) {
+            // Show the real order of the tasks
+            menu.ShowToDoList();
+            menu.DeleteTask();
+        }
         // Show menu again and restart the loop
         userToDoListMenu = menu.ToDoListMenu();
     }

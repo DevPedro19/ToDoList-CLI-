@@ -99,11 +99,9 @@ void ToDoList::ParseFile() {
 
 // Add new task to file
 void ToDoList::AddTask(const Task &task){
+    // Add to ToDoList
     fileTasks.push_back(task);
-}
-
-// Save info in file
-void ToDoList::SaveToFile() {
+    // Add to file
     ofstream output(filePath, std::ios::app);
     // Only write to the file the last task
     output << fileTasks.back().task_to_string() << '\n';
@@ -112,13 +110,13 @@ void ToDoList::SaveToFile() {
 // Pretty print the current tasks
 void ToDoList::OutputTasks() {
     cout << "===== Tasks in file =====\n";
+    int counter = 1;
     for (auto& task : fileTasks) {
-        cout << task.task_to_string() << '\n';
+        cout << counter << ". " << task.task_to_string() << '\n'; counter++;
     }
     cout << '\n';
 }
 
-// TODO: Create functions that use those overloads to sort tasks inside a ToDoList object
 
 void ToDoList::AlphabeticOrder() {
     sort(fileTasks.begin(), fileTasks.end(), Task::AlphabeticCompare);
@@ -139,4 +137,39 @@ void ToDoList::PriorityOrder() {
 
 void ToDoList::StatusOrder() {
     sort(fileTasks.begin(), fileTasks.end(), Task::StatusCompare);
+}
+
+void ToDoList::DeleteTask(size_t& user) {
+    Task delTask = fileTasks.at(user - 1);
+    // Delete task from fileTasks vector (indexable)
+    fileTasks.erase(fileTasks.begin() + static_cast<int>(user) - 1);
+    // Delete task from file
+    ifstream ifs(filePath);
+    // Current line
+    string line;
+    // Result of "cutting and gluing back the file"
+    string res;
+    bool first_line = true;
+    // Basically in this loop we only add the lines that do not correspond to the task to delete
+    while (getline(ifs, line)) {
+        if (first_line) {
+            res += line + '\n';
+        }
+        else {
+            // Substring methods to only get the taskName
+            string taskName = line.substr(0, line.find_first_of(','));
+            if (delTask.getTaskName() != taskName) {
+                res += line + '\n';
+            }
+        }
+        first_line = false;
+    }
+    // Output file stream that allows us to write to the file
+    ofstream ofs(filePath);
+    ofs << res;
+}
+
+size_t ToDoList::getTodolistSize() {
+    // Gets the ToDoList size
+    return fileTasks.size();
 }
