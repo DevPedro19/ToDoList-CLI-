@@ -3,7 +3,6 @@
 #include <iomanip>
 #include <sstream>
 
-// TODO the calling code of the class must have a try and catch block to deal with the created exception
 
 using namespace std;
 

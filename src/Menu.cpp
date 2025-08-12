@@ -70,7 +70,9 @@ int Menu::SelectMenu() {
     // Displays existing lists
     if (existingLists.empty()) {
         cout << "No ToDo lists found.\n";
-        return 0;
+        cout << "As no list was found we have to add at least one.\n";
+        // If no list was found we have to add one so we call the function that adds the new ToDoList
+        AddNewToDoList();
     }
     for (const auto& pair : existingLists) {
         cout << pair.first << ". " << pair.second << '\n';
@@ -95,7 +97,6 @@ int Menu::SelectMenu() {
 }
 
 
-// TODO: Change listName to a vector that contains all ToDolist names available
 void Menu::FindToDoList() {
     int user = 0;
     cout << "Enter ToDoList associated number (In Existing ToDoLists Menu): ";
@@ -152,10 +153,18 @@ void Menu::AddNewToDoList() {
             // Create a new file
             ofstream out("../lists/" + name + ".csv");
             // Add it to existing lists
-            // last corresponds to the last pair in the map (that's why rbegin is used)
-            auto last = existingLists.rbegin();
-            // Then we just simply insert a new key-value pair
-            existingLists[last->first + 1] = name;
+
+            // If the list is empty we create a new entry
+            if (existingLists.empty()) {
+                existingLists[1] = name;
+            }
+            // When the list is not empty we simply "append" to the map
+            else {
+                // last corresponds to the last pair in the map (that's why rbegin is used)
+                auto last = existingLists.rbegin();
+                // Then we just simply insert a new key-value pair
+                existingLists[last->first + 1] = name;
+            }
             break;
         }
         cout << "File already exists. Please enter a valid option.\n";

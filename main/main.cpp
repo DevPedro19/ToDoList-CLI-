@@ -24,6 +24,7 @@ int main() {
         if (userSelectMenu == SELECT) {
             // Find corresponding list
             menu.FindToDoList();
+            // Get user option
             userToDoListMenu = menu.ToDoListMenu();
             break;
         }
@@ -42,7 +43,6 @@ int main() {
         userSelectMenu = menu.SelectMenu();
     }
 
-    //TODO: Add option to go back (not fully exiting the program but only the loop)
 
     // Only executes the loop if previous user inputs were not to exit the program
     while (userToDoListMenu != TD_EXIT && userIntroMenu != INTRO_EXIT && userSelectMenu != SELECT_EXIT) {
