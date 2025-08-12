@@ -26,10 +26,16 @@ public:
     void SaveToFile();
     // Parse JSON array in file
     void OutputTasks();
-    // Create static functions capable of sorting the JSON array based on different parameters
-    // For example, sort the array by alphabetic order, priority or even date
-
-
+    // Order alphabetically
+    void AlphabeticOrder();
+    // Order by date ascending
+    void AscendingDate();
+    // Order by date descending
+    void DescendingDate();
+    // Order by priority (higher priority on top)
+    void PriorityOrder();
+    // Order by status (to_do in front of in process)
+    void StatusOrder();
     // Change task fields, for example priority changed, task status, completion
 
     // Remove tasks

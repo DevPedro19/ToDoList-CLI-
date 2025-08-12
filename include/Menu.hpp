@@ -40,6 +40,8 @@ public:
     void ShowToDoList();
     // Add task to ToDoList via menu
     void AddTask();
+    // Order menu
+    void OrderTasks();
     // Auxiliary functions
     static string TaskNameInput();
     static Date DateInput();

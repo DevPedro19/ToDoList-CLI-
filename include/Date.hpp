@@ -17,6 +17,11 @@ class Date{
         static bool is_leap(int year);
         // Check the validity of the date
         [[nodiscard]] bool is_valid() const;
+        [[nodiscard]] int getDay() const;
+        [[nodiscard]] int getMonth() const;
+        [[nodiscard]] int getYear() const;
+        // Overload for the less than comparison
+        bool operator<(const Date& date) const;
     private:
         // Member fields
         int day, month, year;

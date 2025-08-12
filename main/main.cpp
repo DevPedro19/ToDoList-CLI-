@@ -55,6 +55,9 @@ int main() {
             // Add new task to ToDoList
             menu.AddTask();
         }
+        if (userToDoListMenu == ORDER) {
+            menu.OrderTasks();
+        }
         // Show menu again and restart the loop
         userToDoListMenu = menu.ToDoListMenu();
     }

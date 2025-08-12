@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
-
+#include <algorithm>
 using std::ifstream;
 using std::ofstream;
 using std::filesystem::is_empty;
@@ -10,6 +10,7 @@ using std::getline;
 using std::vector;
 using std::istringstream;
 using std::cout;
+using std::sort;
 
 
 // Trivial constructor
@@ -117,7 +118,25 @@ void ToDoList::OutputTasks() {
     cout << '\n';
 }
 
-// TODO: Create overloads to sort the tasks to be displayed
-
 // TODO: Create functions that use those overloads to sort tasks inside a ToDoList object
 
+void ToDoList::AlphabeticOrder() {
+    sort(fileTasks.begin(), fileTasks.end(), Task::AlphabeticCompare);
+}
+
+void ToDoList::AscendingDate() {
+    sort(fileTasks.begin(), fileTasks.end(), Task::DateCompare);
+}
+
+void ToDoList::DescendingDate() {
+    sort(fileTasks.begin(), fileTasks.end(), Task::DateCompare);
+    reverse(fileTasks.begin(), fileTasks.end());
+}
+
+void ToDoList::PriorityOrder() {
+    sort(fileTasks.begin(), fileTasks.end(), Task::PriorityCompare);
+}
+
+void ToDoList::StatusOrder() {
+    sort(fileTasks.begin(), fileTasks.end(), Task::StatusCompare);
+}

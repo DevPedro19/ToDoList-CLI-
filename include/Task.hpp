@@ -1,6 +1,7 @@
 #ifndef TASK_H
 #define TASK_H
 #include "Date.hpp"
+#include <unordered_map>
 
 class Task {
 public:
@@ -16,6 +17,14 @@ public:
     [[nodiscard]] Date getDueDate() const;
     [[nodiscard]] std::string getTaskPriority() const;
     [[nodiscard]] std::string getTaskStatus() const;
+    // Static functions
+    static bool AlphabeticCompare(const Task& a, const Task& b);
+    static bool DateCompare(const Task& a, const Task& b);
+    static bool PriorityCompare(const Task& a, const Task& b);
+    static bool StatusCompare(const Task& a, const Task& b);
+    // Static (global class variables)
+    static::std::unordered_map<std::string, int> PriorityMap;
+    static::std::unordered_map<std::string, int> StatusMap;
 private:
     // Task name (Non-empty)
     std::string taskName;

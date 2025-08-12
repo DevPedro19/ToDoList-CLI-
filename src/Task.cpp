@@ -3,7 +3,15 @@
 #include <set>
 #include <utility>
 #include <sstream>
-using namespace std;
+
+// Global variables to the class
+std::unordered_map<std::string, int> Task::PriorityMap = {
+    {"HIGH", 0}, {"NORMAL", 1}, {"LOW", 2}
+};
+
+std::unordered_map<std::string, int> Task::StatusMap = {
+    {"TODO", 0}, {"IN PROGRESS", 1},
+};
 
 Task::Task() = default;
 
@@ -31,7 +39,7 @@ Task::Task(std::string& name, Date& due, std::string& priority, std::string& sta
 
 
 std::string Task::task_to_string() const {
-    ostringstream out;
+    std::ostringstream out;
     // Using commas because it will be useful to write in a CSV
     out << taskName << ", " << dueDate.date_to_string() << ", " << taskPriority << ", " << taskStatus;
     return out.str();
@@ -62,4 +70,24 @@ std::string Task::getTaskStatus() const {
 
 std::string Task::getTaskPriority() const {
     return taskPriority;
+}
+
+
+bool Task::AlphabeticCompare(const Task &a, const Task &b) {
+    return a.taskName < b.taskName;
+}
+
+
+bool Task::DateCompare(const Task &a, const Task &b) {
+    return a.dueDate < b.dueDate;
+}
+
+
+bool Task::PriorityCompare(const Task &a, const Task &b) {
+    return PriorityMap[a.taskPriority] < PriorityMap[b.taskPriority];
+}
+
+
+bool Task::StatusCompare(const Task &a, const Task &b) {
+    return StatusMap[a.taskStatus] < StatusMap[b.taskStatus];
 }

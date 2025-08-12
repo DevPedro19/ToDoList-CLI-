@@ -8,6 +8,7 @@ using namespace std;
 
 Date::Date() : day(0), month(0), year(0){}
 
+
 // Constructor with parameters (dd/mm/yyyy)
 Date::Date(const int day, const int month, const int year) {
     // Check "date bounds"
@@ -30,6 +31,7 @@ Date::Date(const int day, const int month, const int year) {
     }
 }
 
+
 // Return date as a string
 string Date::date_to_string() const {
     ostringstream out;
@@ -43,6 +45,7 @@ bool Date::is_leap(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
+
 bool Date::is_valid() const {
     bool res = false;
     if (day == 0 && month == 0 && year == 0) {
@@ -51,4 +54,22 @@ bool Date::is_valid() const {
     return res;
 }
 
+
+int Date::getDay() const {
+    return day;
+}
+
+int Date::getMonth() const {
+    return month;
+}
+
+int Date::getYear() const {
+    return year;
+}
+
+bool Date::operator<(const Date &date) const {
+    if (year != date.year) return year < date.year;
+    if (month != date.month) return month < date.month;
+    return day < date.day;
+}
 

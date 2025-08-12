@@ -183,7 +183,7 @@ int Menu::ToDoListMenu() {
     cout << "1. Show tasks\n";
     cout << "2. Add task\n";
     // Order ToDoList based on different criteria
-    cout << "3. Order by (1 - Alphabetic order | 2 - Due date | 3 - Priority | 4 - Status)\n";
+    cout << "3. Order\n";
     // Delete tasks
     cout << "4. Remove task\n";
     // Edit task
@@ -351,6 +351,45 @@ void Menu::AddTask() {
     todolist.SaveToFile();
 }
 
+
 // TODO: Create the remaining menus
+// Order menu according to parameter
+void Menu::OrderTasks() {
+    int user;
+    while (true) {
+        cout << "Enter the ordering option (1 - Alphabetic order | 2 - Oldest to Newest | 3 - Newest to oldest |"
+                " 4 - Priority | 5 - Status): \n";
+        if (cin >> user && user >= 1 && user <= 5) {
+            // Switch case to handle different options
+            switch (user) {
+                case 1:
+                    todolist.AlphabeticOrder();
+                    // Alphabetic order
+                    break;
+                case 2:
+                    // Ascending due date
+                    todolist.AscendingDate();
+                    break;
+                case 3:
+                    // Descending due date
+                    todolist.DescendingDate();
+                    break;
+                case 4:
+                    // Priority
+                    todolist.PriorityOrder();
+                    break;
+                default:
+                    todolist.StatusOrder();
+                    // Status
+                    break;
+            }
+            ShowToDoList();
+            break;
+        }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
 
 
