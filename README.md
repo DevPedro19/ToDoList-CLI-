@@ -27,5 +27,4 @@ I wrote this simple program after my first year of college and I used OOP C++ co
 that I've learned during my first year's second semester.
 It was an interesting challenge since I've never coded a project all by myself, even though 
 the end product was obviously simple.
-I tried to make the code as readable and maintainable as possible using Classes to
-be as organized as possible.
+I tried to make the code as readable and maintainable as possible.
