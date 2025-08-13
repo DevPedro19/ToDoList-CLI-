@@ -10,13 +10,13 @@ public:
     Task(std::string& name, Date& due, std::string& priority, std::string& stat);
     // Normalise string
     static void to_upper_string(std::string& str);
-    // For testing purposes
+    // To write the formatted task to our file
     [[nodiscard]] std::string task_to_string() const;
-    // Getters
-    [[nodiscard]] std::string getTaskName() const;
-    [[nodiscard]] Date getDueDate() const;
-    [[nodiscard]] std::string getTaskPriority() const;
-    [[nodiscard]] std::string getTaskStatus() const;
+    // Mutable getters
+    [[nodiscard]] std::string& getTaskName();
+    [[nodiscard]] Date& getDueDate();
+    [[nodiscard]] std::string& getTaskPriority();
+    [[nodiscard]] std::string& getTaskStatus();
     // Static functions
     static bool AlphabeticCompare(const Task& a, const Task& b);
     static bool DateCompare(const Task& a, const Task& b);

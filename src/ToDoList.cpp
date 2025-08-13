@@ -3,6 +3,7 @@
 #include <iostream>
 #include <filesystem>
 #include <algorithm>
+#include <utility>
 using std::ifstream;
 using std::ofstream;
 using std::filesystem::is_empty;
@@ -11,7 +12,7 @@ using std::vector;
 using std::istringstream;
 using std::cout;
 using std::sort;
-
+using std::ios;
 
 // Trivial constructor
 ToDoList::ToDoList() = default;
@@ -68,7 +69,6 @@ Date ToDoList::ParseDate(string& date) {
 }
 
 
-
 void ToDoList::ParseFile() {
     // Create a parser for CSV files
     // Input filestream
@@ -101,10 +101,6 @@ void ToDoList::ParseFile() {
 void ToDoList::AddTask(const Task &task){
     // Add to ToDoList
     fileTasks.push_back(task);
-    // Add to file
-    ofstream output(filePath, std::ios::app);
-    // Only write to the file the last task
-    output << fileTasks.back().task_to_string() << '\n';
 }
 
 // Pretty print the current tasks
@@ -143,33 +139,44 @@ void ToDoList::DeleteTask(size_t& user) {
     Task delTask = fileTasks.at(user - 1);
     // Delete task from fileTasks vector (indexable)
     fileTasks.erase(fileTasks.begin() + static_cast<int>(user) - 1);
-    // Delete task from file
-    ifstream ifs(filePath);
-    // Current line
-    string line;
-    // Result of "cutting and gluing back the file"
-    string res;
-    bool first_line = true;
-    // Basically in this loop we only add the lines that do not correspond to the task to delete
-    while (getline(ifs, line)) {
-        if (first_line) {
-            res += line + '\n';
-        }
-        else {
-            // Substring methods to only get the taskName
-            string taskName = line.substr(0, line.find_first_of(','));
-            if (delTask.getTaskName() != taskName) {
-                res += line + '\n';
-            }
-        }
-        first_line = false;
-    }
-    // Output file stream that allows us to write to the file
-    ofstream ofs(filePath);
-    ofs << res;
 }
 
 size_t ToDoList::getTodolistSize() {
     // Gets the ToDoList size
     return fileTasks.size();
+}
+
+
+void ToDoList::EditTaskName(size_t &position, string str) {
+    // Access the task through its index and then use the mutable reference to change the value of the field we want
+    fileTasks.at(position - 1).getTaskName() = std::move(str);
+}
+
+
+void ToDoList::EditTaskDueDate(size_t &position, Date date) {
+    fileTasks.at(position - 1).getDueDate() = std::move(date);
+}
+
+
+void ToDoList::EditTaskPriority(size_t &position, string str) {
+    fileTasks.at(position - 1).getTaskPriority() = std::move(str);
+}
+
+
+void ToDoList::EditTaskStatus(size_t &position, string str) {
+    fileTasks.at(position - 1).getTaskStatus() = std::move(str);
+}
+
+
+void ToDoList::SaveToFile() {
+    // Truncate the file completely
+    ofstream trunc(filePath, ios::trunc);
+    // First write the header
+    WriteHeader();
+    // Create object to output file (we will overwrite the file, truncating the initial content)
+    ofstream output(filePath, ios::app);
+    // Then output all the tasks to the file correctly
+    for (auto& task: fileTasks) {
+        output << task.task_to_string() << '\n';
+    }
 }

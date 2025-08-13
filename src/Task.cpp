@@ -53,22 +53,22 @@ void Task::to_upper_string(std::string &str) {
 }
 
 
-Date Task::getDueDate() const {
+Date& Task::getDueDate() {
     return dueDate;
 }
 
 
-std::string Task::getTaskName() const {
+std::string& Task::getTaskName() {
     return taskName;
 }
 
 
-std::string Task::getTaskStatus() const {
+std::string& Task::getTaskStatus() {
     return taskStatus;
 }
 
 
-std::string Task::getTaskPriority() const {
+std::string& Task::getTaskPriority() {
     return taskPriority;
 }
 

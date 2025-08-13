@@ -44,6 +44,12 @@ public:
     void OrderTasks();
     // Delete task
     void DeleteTask();
+    // Edit task
+    void EditTask();
+    // Field Selector
+    void FieldSelector(size_t& position);
+    // Save in file
+    void Save();
     // Auxiliary functions
     static string TaskNameInput();
     static Date DateInput();
@@ -52,7 +58,7 @@ public:
 private:
     map<int, string> existingLists;
     // Current list index
-    int currentListIndex;
+    int currentListIndex = 0;
     // Current List name
     string currentListName;
     ToDoList todolist;

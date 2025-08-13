@@ -397,7 +397,6 @@ void Menu::OrderTasks() {
 
 void Menu::DeleteTask() {
     if (todolist.getTodolistSize() != 0) {
-        // User is like this to get indexable value
         size_t user;
         while (true) {
             cout << "Enter the task number (to be deleted): ";
@@ -418,4 +417,57 @@ void Menu::DeleteTask() {
 }
 
 
+void Menu::FieldSelector(size_t& position) {
+    // User second input inside of Edit Task
+    size_t fieldPosition;
+    while (true) {
+        cout << "Enter the field number to be edited (1 - Name | 2 - Due Date | 3 - Priority | 4 - Status): ";
+        // Make sure it's in the range
+        if (cin >> fieldPosition && fieldPosition >= 1 && fieldPosition <= 4) {
+            switch (fieldPosition) {
+                case 1:
+                    todolist.EditTaskName(position, TaskNameInput());
+                    break;
+                case 2:
+                    todolist.EditTaskDueDate(position, DateInput());
+                    break;
+                case 3:
+                    todolist.EditTaskPriority(position, TaskPriorityInput());
+                    break;
+                default:
+                    todolist.EditTaskStatus(position, TaskStatusInput());
+                    break;
+            }
+            break;
+        }
+        cout << "Invalid input. Please enter a valid option.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
+
+
+void Menu::EditTask() {
+    if (todolist.getTodolistSize() != 0) {
+        size_t position;
+        while (true) {
+            cout << "Enter the task number (to be edited): ";
+            // Make sure it's in the range
+            if (cin >> position && position >= 1 && position <= todolist.getTodolistSize() + 1) {
+                FieldSelector(position);
+                break;
+            }
+            cout << "Invalid input. Please enter a valid option.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+    else {
+        cout << "No tasks found, unable to edit. Let's first add some tasks\n";
+    }
+}
+
+void Menu::Save() {
+    todolist.SaveToFile();
+}
 

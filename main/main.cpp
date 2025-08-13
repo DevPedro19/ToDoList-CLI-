@@ -53,9 +53,11 @@ int main() {
         }
         if (userToDoListMenu == ADD) {
             // Add new task to ToDoList
+            menu.ShowToDoList();
             menu.AddTask();
         }
         if (userToDoListMenu == ORDER) {
+            menu.ShowToDoList();
             menu.OrderTasks();
         }
         if (userToDoListMenu == REMOVE) {
@@ -63,6 +65,12 @@ int main() {
             menu.ShowToDoList();
             menu.DeleteTask();
         }
+        if (userToDoListMenu == EDIT) {
+            menu.ShowToDoList();
+            menu.EditTask();
+        }
+        // Save the changes done to the file
+        menu.Save();
         // Show menu again and restart the loop
         userToDoListMenu = menu.ToDoListMenu();
     }

@@ -37,7 +37,13 @@ public:
     // Remove tasks
     size_t getTodolistSize();
     void DeleteTask(size_t& user);
-    // TODO: Change task fields, for example priority changed, task status, completion
+    // Edit string fields of the task
+    void EditTaskName(size_t& position, string str);
+    void EditTaskDueDate(size_t& position, Date date);
+    void EditTaskPriority(size_t& position, string str);
+    void EditTaskStatus(size_t& position, string str);
+    // Save to file
+    void SaveToFile();
     // Auxiliary functions
     static vector<string> GetFieldVector(string& line);
 private:
