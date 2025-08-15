@@ -17,7 +17,7 @@ using std::ios;
 // Trivial constructor
 ToDoList::ToDoList() = default;
 
-
+// Constructor with parameters
 ToDoList::ToDoList(const string &filename) {
     filePath = "lists/" + filename + ".csv";
     // Writes the header in the CSV
@@ -27,6 +27,7 @@ ToDoList::ToDoList(const string &filename) {
 }
 
 
+// Writes the header
 void ToDoList::WriteHeader() {
     // Checks if the file is empty
     if (is_empty(filePath)) {
@@ -38,6 +39,7 @@ void ToDoList::WriteHeader() {
 }
 
 
+// Creates a vector correctly separated into fields
 vector<string> ToDoList::GetFieldVector(string& line) {
     vector<string> fields;
     // Parse individual fields (I've already coded something like this before... a split or smth)
@@ -60,6 +62,7 @@ vector<string> ToDoList::GetFieldVector(string& line) {
 }
 
 
+// Correctly parses the date(string)
 Date ToDoList::ParseDate(string& date) {
     char sep1, sep2;
     int day, month, year;
@@ -69,6 +72,7 @@ Date ToDoList::ParseDate(string& date) {
 }
 
 
+// Parses the whole file
 void ToDoList::ParseFile() {
     // Create a parser for CSV files
     // Input filestream
@@ -114,6 +118,7 @@ void ToDoList::OutputTasks() {
 }
 
 
+// Functions that order the tasks
 void ToDoList::AlphabeticOrder() {
     sort(fileTasks.begin(), fileTasks.end(), Task::AlphabeticCompare);
 }
@@ -135,18 +140,22 @@ void ToDoList::StatusOrder() {
     sort(fileTasks.begin(), fileTasks.end(), Task::StatusCompare);
 }
 
+
+// Task deletion
 void ToDoList::DeleteTask(size_t& user) {
     Task delTask = fileTasks.at(user - 1);
     // Delete task from fileTasks vector (indexable)
     fileTasks.erase(fileTasks.begin() + static_cast<int>(user) - 1);
 }
 
+
+// todolist size getter
 size_t ToDoList::getTodolistSize() {
     // Gets the ToDoList size
     return fileTasks.size();
 }
 
-
+// Edit the task
 void ToDoList::EditTaskName(size_t &position, string str) {
     // Access the task through its index and then use the mutable reference to change the value of the field we want
     fileTasks.at(position - 1).getTaskName() = std::move(str);
@@ -168,6 +177,7 @@ void ToDoList::EditTaskStatus(size_t &position, string str) {
 }
 
 
+// Save todolist to the file
 void ToDoList::SaveToFile() {
     // Truncate the file completely
     ofstream trunc(filePath, ios::trunc);

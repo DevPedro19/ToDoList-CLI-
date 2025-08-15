@@ -39,13 +39,13 @@ string Date::date_to_string() const {
     return out.str();
 }
 
-
+// Checks if the year is leap
 bool Date::is_leap(int year) {
     // A year is a leap year if divisible by 4 and not by 100, or divisible by 400
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
-
+// Checks if the date is valid
 bool Date::is_valid() const {
     bool res = false;
     if (day == 0 && month == 0 && year == 0) {
@@ -54,7 +54,7 @@ bool Date::is_valid() const {
     return res;
 }
 
-
+// Getters
 int Date::getDay() const {
     return day;
 }
@@ -67,6 +67,8 @@ int Date::getYear() const {
     return year;
 }
 
+
+// Overload to compare dates
 bool Date::operator<(const Date &date) const {
     if (year != date.year) return year < date.year;
     if (month != date.month) return month < date.month;

@@ -22,7 +22,7 @@ using std::cout;
 
 Menu::Menu() {}
 
-
+// Intro Menu: Check existing lists or fully exit the program
 int Menu::IntroMenu() {
     cout << "===== ToDoList INTRO MENU =====\n";
     cout << "1. Check existing ToDo Lists\n";
@@ -44,6 +44,8 @@ int Menu::IntroMenu() {
     return userOption;
 }
 
+
+// Iterates over the files in the lists folder and then it maps them out to a map so its easier to access for the user
 void Menu::ToDoListMap() {
     map<int, string> listNames;
     int index = 1;
@@ -65,6 +67,7 @@ void Menu::ToDoListMap() {
 }
 
 
+// SelectMenu: Allows the user to perform operations in the existing lists (.csv files) and handles case when there are no lists
 int Menu::SelectMenu() {
     cout << "===== Existing ToDoLists =====\n";
     // Displays existing lists
@@ -97,6 +100,7 @@ int Menu::SelectMenu() {
 }
 
 
+// Finder of the list by user index
 void Menu::FindToDoList() {
     int user = 0;
     cout << "Enter ToDoList associated number (In Existing ToDoLists Menu): ";
@@ -121,6 +125,7 @@ void Menu::FindToDoList() {
 }
 
 
+// Delete ToDoList from the filesystem and also from the vector
 void Menu::DeleteToDoList() {
     // Using the filesystem function remove to remove the file based on its filepath
     remove("../lists/" + currentListName + ".csv");
@@ -129,6 +134,7 @@ void Menu::DeleteToDoList() {
 }
 
 
+// Finder by name
 bool Menu::FoundName(string& name) {
     bool found = false;
     for (auto& pair: existingLists) {
@@ -140,6 +146,7 @@ bool Menu::FoundName(string& name) {
 }
 
 
+// Adds new list to the files and to the existingLists vector
 void Menu::AddNewToDoList() {
     // Name field
     string name;
@@ -174,6 +181,7 @@ void Menu::AddNewToDoList() {
 }
 
 
+// ToDoList Menu: allows users to perform actions inside the selected ToDoList
 int Menu::ToDoListMenu() {
     // Update todolist object so we can execute method's from ToDoList class in following methods of the class
     todolist = ToDoList(currentListName);
@@ -207,11 +215,13 @@ int Menu::ToDoListMenu() {
 }
 
 
+// Basic output function
 void Menu::ShowToDoList() {
     todolist.OutputTasks();
 }
 
 
+// Functions to input a new Task
 string Menu::TaskNameInput() {
     // Name field
     string name;
@@ -334,6 +344,7 @@ string Menu::TaskStatusInput() {
 }
 
 
+// Add Task to the todolist object
 void Menu::AddTask() {
     // Get task name
     string name = TaskNameInput();
@@ -349,7 +360,6 @@ void Menu::AddTask() {
 }
 
 
-// TODO: Create the remaining menus
 // Order menu according to parameter
 void Menu::OrderTasks() {
     if (todolist.getTodolistSize() != 0) {
@@ -395,6 +405,7 @@ void Menu::OrderTasks() {
 }
 
 
+// Deletes task from todolist object
 void Menu::DeleteTask() {
     if (todolist.getTodolistSize() != 0) {
         size_t user;
@@ -417,6 +428,7 @@ void Menu::DeleteTask() {
 }
 
 
+// Selects the correct field to be edited
 void Menu::FieldSelector(size_t& position) {
     // User second input inside of Edit Task
     size_t fieldPosition;
@@ -447,6 +459,7 @@ void Menu::FieldSelector(size_t& position) {
 }
 
 
+// Function to Edit the Task
 void Menu::EditTask() {
     if (todolist.getTodolistSize() != 0) {
         size_t position;
@@ -467,6 +480,8 @@ void Menu::EditTask() {
     }
 }
 
+
+// Saves changes to File
 void Menu::Save() {
     todolist.SaveToFile();
 }

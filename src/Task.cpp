@@ -15,6 +15,8 @@ std::unordered_map<std::string, int> Task::StatusMap = {
 
 Task::Task() = default;
 
+
+// Constructor with exeption handlers
 Task::Task(std::string& name, Date& due, std::string& priority, std::string& stat): dueDate(std::move(due)) {
     // Check if values are correct
 
@@ -38,6 +40,7 @@ Task::Task(std::string& name, Date& due, std::string& priority, std::string& sta
 }
 
 
+// Outputs the task as a string
 std::string Task::task_to_string() const {
     std::ostringstream out;
     // Using commas because it will be useful to write in a CSV
@@ -46,6 +49,7 @@ std::string Task::task_to_string() const {
 }
 
 
+// to upper function
 void Task::to_upper_string(std::string &str) {
     for (auto& ch: str) {
         ch = static_cast<char>(toupper(ch));
@@ -53,6 +57,7 @@ void Task::to_upper_string(std::string &str) {
 }
 
 
+// Getters
 Date& Task::getDueDate() {
     return dueDate;
 }
@@ -73,6 +78,7 @@ std::string& Task::getTaskPriority() {
 }
 
 
+// Comparison functions useful for sorting tasks inside todolist object
 bool Task::AlphabeticCompare(const Task &a, const Task &b) {
     return a.taskName < b.taskName;
 }
