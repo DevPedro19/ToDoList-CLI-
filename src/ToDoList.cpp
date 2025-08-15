@@ -76,7 +76,7 @@ void ToDoList::ParseFile() {
     // Current line
     string line;
     bool first_line = true;
-    while (getline(ifs, line)) {
+    while (getline(ifs, line) && line != "") {
         vector<string> fields;
         if (!first_line) {
             fields = GetFieldVector(line);
