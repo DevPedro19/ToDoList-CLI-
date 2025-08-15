@@ -1,9 +1,9 @@
 # ToDoList-CLI-
 This is a CSV-backed ToDoList (CRUD CLI - Create, Read, Update and Delete 
-Command Line Interface).
+Command Line Interface), that has file persistency.
 
 ## Backstory
-I wrote this simple program after my first year of college and I used OOP C++ concepts 
+I wrote this simple program after my first year of college and I used OOP and file managing C++ concepts 
 that I've learned during my first year's second semester.
 It was an interesting challenge since I've never coded a project all by myself (all the classes and how the program works was thought out by me), even though 
 the end product was obviously simple.
@@ -51,4 +51,11 @@ ToDoList-CLI-/
 ```
 ## How it works
 Let's start by dissecting what each class does exactly.
-* class Menu
+### class Menu: 
+- Creates the general interface of menus that is executed in main.cpp.
+- Each menu handles user input
+Variables defined by the class:
+- existingLists: maps out the lists into a map so it's indexed making it easier for the user
+- currentListIndex: To-do list index inserted by the user
+- currentListName: List name corresponding to the selected index
+- todolist: object of the class ToDoList that essentially represents our list
