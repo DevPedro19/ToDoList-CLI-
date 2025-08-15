@@ -51,6 +51,4 @@ ToDoList-CLI-/
 ```
 ## How it works
 Let's start by dissecting what each class does exactly.
-```c++
-class Menu
-```
+* class Menu
