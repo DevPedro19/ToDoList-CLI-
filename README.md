@@ -15,6 +15,8 @@ cmake -B build
 cd build
 # Make executables
 make
+# Clear to clean the terminal before running
+clear
 # Run the program
 ./main
 ```
