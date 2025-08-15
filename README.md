@@ -50,4 +50,7 @@ ToDoList-CLI-/
 └── CMakeLists.txt        # Build configuration for CMake
 ```
 ## How it works
-
+Let's start by dissecting what each class does exactly.
+```c++
+class Menu
+```
