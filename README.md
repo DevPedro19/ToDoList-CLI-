@@ -20,7 +20,28 @@ make
 ./main
 ```
 
+## Folder structure
+ToDoList-CLI-/
+├── include/              # Header files
+    ├── Date.hpp
+    ├── InvalidDate.hpp
+    ├── InvalidField.hpp
+    ├── Menu.hpp
+    ├── Task.hpp
+    ├── ToDoList.hpp
+├── lists/                # Directory where CSV ToDoLists are saved
+├── src/                  # Source code files
+    ├── Date.cpp
+    ├── Menu.cpp
+    ├── Task.cpp
+    ├── ToDoList.cpp
+├── tester/               # Testing .cpp file (deprecated)
+├── .gitignore            # Standard Git ignore files
+└── CMakeLists.txt        # Build configuration for CMake
+
 ## How it works
+
+
 
 ## Backstory
 I wrote this simple program after my first year of college and I used OOP C++ concepts 
