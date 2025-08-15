@@ -21,6 +21,7 @@ make
 ```
 
 ## Folder structure
+```
 ToDoList-CLI-/
 ├── include/              # Header files
     ├── Date.hpp
@@ -38,7 +39,7 @@ ToDoList-CLI-/
 ├── tester/               # Testing .cpp file (deprecated)
 ├── .gitignore            # Standard Git ignore files
 └── CMakeLists.txt        # Build configuration for CMake
-
+```
 ## How it works
 
 
