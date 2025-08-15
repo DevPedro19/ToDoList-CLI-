@@ -1,5 +1,4 @@
 # ToDoList-CLI-
-
 This is a CSV-backed ToDoList (CRUD CLI - Create, Read, Update and Delete 
 Command Line Interface).
 
