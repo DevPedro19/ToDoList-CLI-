@@ -113,17 +113,119 @@ private:
 
 ### class ToDoList: 
 - Defined useful functions to apply to the ToDoList (essetially a vector of Tasks)
+```c++
+class ToDoList {
+public:
+    // Create empty JSON array of tasks
+    ToDoList();
+    // Copy constructor from a file
+    explicit ToDoList(const string& filename);
+    // Write CSV header if the file is empty
+    void WriteHeader();
+    // Parse CSV file
+    void ParseFile();
+    // Parse Date
+    static Date ParseDate(string& date);
+    // Add new task to CSV file
+    void AddTask(const Task& task);
+    // Parse JSON array in file
+    void OutputTasks();
+    // Order alphabetically
+    void AlphabeticOrder();
+    // Order by date ascending
+    void AscendingDate();
+    // Order by date descending
+    void DescendingDate();
+    // Order by priority (higher priority on top)
+    void PriorityOrder();
+    // Order by status (to_do in front of in process)
+    void StatusOrder();
+    // Remove tasks
+    size_t getTodolistSize();
+    void DeleteTask(size_t& user);
+    // Edit string fields of the task
+    void EditTaskName(size_t& position, string str);
+    void EditTaskDueDate(size_t& position, Date date);
+    void EditTaskPriority(size_t& position, string str);
+    void EditTaskStatus(size_t& position, string str);
+    // Save to file
+    void SaveToFile();
+    // Auxiliary functions
+    static vector<string> GetFieldVector(string& line);
+private:
+    std::string filePath;
+    std::vector<Task> fileTasks;
+};
+```
 #### Variables defined by the class:
 - **filePath**: ToDoList corresponding filePath
 - **fileTasks**: Vector that contains Tasks
 
 ### class Task: 
 - Defines a Task as an object cointaining important properties (name, date, priority and status)
+```c++
+class Task {
+public:
+    Task();
+    // Constructor with parameters
+    Task(std::string& name, Date& due, std::string& priority, std::string& stat);
+    // Normalise string
+    static void to_upper_string(std::string& str);
+    // To write the formatted task to our file
+    [[nodiscard]] std::string task_to_string() const;
+    // Mutable getters
+    [[nodiscard]] std::string& getTaskName();
+    [[nodiscard]] Date& getDueDate();
+    [[nodiscard]] std::string& getTaskPriority();
+    [[nodiscard]] std::string& getTaskStatus();
+    // Static functions
+    static bool AlphabeticCompare(const Task& a, const Task& b);
+    static bool DateCompare(const Task& a, const Task& b);
+    static bool PriorityCompare(const Task& a, const Task& b);
+    static bool StatusCompare(const Task& a, const Task& b);
+    // Static (global class variables)
+    static::std::unordered_map<std::string, int> PriorityMap;
+    static::std::unordered_map<std::string, int> StatusMap;
+private:
+    // Task name (Non-empty)
+    std::string taskName;
+    // Due date (dd/mm/yyyy)
+    Date dueDate;
+    // Task priority (LOW, NORMAL, HIGH)
+    std::string taskPriority;
+    // Status (IN PROGRESS, TODO)
+    std::string taskStatus;
+};
+```
 #### Variables defined by the class:
 - Pretty self explanatory: **TaskName**: name, **dueDate**: date, **taskPriority**: priority (LOW, NORMAL, HIGH) and **taskStatus**: status (TODO, IN PROGRESS)
 
 ### class Date: 
 - Defines a valid Date
+```c++
+class Date{
+    public:
+        Date();
+        // Constructor with parameters (dd/mm/yyyy)
+        Date(int day, int month, int year);
+        // For debug purposes and to add date to the JSON file
+        [[nodiscard]] std::string date_to_string() const;
+        // Verify if the year is leap or non leap
+        static bool is_leap(int year);
+        // Check the validity of the date
+        [[nodiscard]] bool is_valid() const;
+        [[nodiscard]] int getDay() const;
+        [[nodiscard]] int getMonth() const;
+        [[nodiscard]] int getYear() const;
+        // Overload for the less than comparison
+        bool operator<(const Date& date) const;
+    private:
+        // Member fields
+        int day, month, year;
+        // Vector that holds the number of days of each year
+        std::vector<int> monthDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+};
+```
 
 ### main.cpp
 - Defines the coditional flow of the code
