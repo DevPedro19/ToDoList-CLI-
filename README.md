@@ -54,14 +54,6 @@ Let's start by dissecting what each class does exactly.
 ### class Menu: 
 - Creates the general interface of menus that is executed in main.cpp.
 - Each menu handles user input
-#### Variables defined by the class:
-- **existingLists**: maps out the lists into a map so it's indexed making it easier for the user
--**currentListIndex**: To-do list index inserted by the user
-- **currentListName**: List name corresponding to the selected index
-- **todolist**: object of the class ToDoList that essentially represents our list
-#### Enums
-- Used to define integer named variables that identify different menu options
-
 ```c++
 class Menu {
 public:
@@ -111,6 +103,13 @@ private:
     ToDoList todolist;
 };
 ```
+#### Variables defined by the class:
+- **existingLists**: maps out the lists into a map so it's indexed making it easier for the user
+-**currentListIndex**: To-do list index inserted by the user
+- **currentListName**: List name corresponding to the selected index
+- **todolist**: object of the class ToDoList that essentially represents our list
+#### Enums
+- Used to define integer named variables that identify different menu options
 
 ### class ToDoList: 
 - Defined useful functions to apply to the ToDoList (essetially a vector of Tasks)
