@@ -3,11 +3,12 @@ This is a CSV-backed ToDoList (CRUD CLI - Create, Read, Update and Delete
 Command Line Interface), that has file persistency.
 
 ## Backstory
-I wrote this simple program after my first year of college and I used OOP and file managing C++ concepts 
+I wrote this program after my first year of college and I used OOP, file managing and STL C++ concepts 
 that I've learned during my first year's second semester.
 It was an interesting challenge since I've never coded a project all by myself (all the classes and how the program works was thought out by me), even though 
 the end product was obviously simple.
 I tried to make the code as readable and maintainable as possible.
+After coding it, I learned that even a small project like this has some degree of complexity.
 
 
 ## Build Instructions
