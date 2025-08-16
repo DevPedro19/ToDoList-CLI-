@@ -55,7 +55,26 @@ Let's start by dissecting what each class does exactly.
 - Creates the general interface of menus that is executed in main.cpp.
 - Each menu handles user input
 #### Variables defined by the class:
-- existingLists: maps out the lists into a map so it's indexed making it easier for the user
-- currentListIndex: To-do list index inserted by the user
-- currentListName: List name corresponding to the selected index
-- todolist: object of the class ToDoList that essentially represents our list
+- **existingLists**: maps out the lists into a map so it's indexed making it easier for the user
+-**currentListIndex**: To-do list index inserted by the user
+- **currentListName**: List name corresponding to the selected index
+- **todolist**: object of the class ToDoList that essentially represents our list
+#### Enums
+- Used to define integer named variables that identify different menu options
+
+### class ToDoList: 
+- Defined useful functions to apply to the ToDoList (essetially a vector of Tasks)
+#### Variables defined by the class:
+- **filePath**: ToDoList corresponding filePath
+- **fileTasks**: Vector that contains Tasks
+
+### class Task: 
+- Defines a Task as an object cointaining important properties (name, date, priority and status)
+#### Variables defined by the class:
+- Pretty self explanatory: **TaskName**: name, **dueDate**: date, **taskPriority**: priority (LOW, NORMAL, HIGH) and **taskStatus**: status (TODO, IN PROGRESS)
+
+### class Date: 
+- Defines a valid Date
+
+### main.cpp
+- Defines the coditional flow of the code
