@@ -49,7 +49,6 @@ public:
 private:
     std::string filePath;
     std::vector<Task> fileTasks;
-
 };
 
 #endif

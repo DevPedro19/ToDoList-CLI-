@@ -22,11 +22,3 @@ target_include_directories(main PRIVATE include)
 add_executable(tester ${SOURCES_BASE} tester/tester.cpp)
 
 target_include_directories(tester PRIVATE include)
-
-# Copies list directory next to the build file
-add_custom_command(
-        TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/lists
-        ${CMAKE_CURRENT_BINARY_DIR}/lists
-)

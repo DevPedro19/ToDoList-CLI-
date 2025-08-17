@@ -19,7 +19,7 @@ ToDoList::ToDoList() = default;
 
 // Constructor with parameters
 ToDoList::ToDoList(const string &filename) {
-    filePath = "lists/" + filename + ".csv";
+    filePath = "../lists/" + filename + ".csv";
     // Writes the header in the CSV
     WriteHeader();
     // Parse current file
