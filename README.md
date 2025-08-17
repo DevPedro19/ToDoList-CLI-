@@ -16,7 +16,9 @@ Clone this repository and build with CMake:
 
 ```bash
 # Clone the repo
-git clone https://github.com/DevPedro19/ToDoList-CLI-.git
+# git clone https://github.com/DevPedro19/ToDoList-CLI-.git
+# for debug and testing purposes
+git@github.com:DevPedro19/ToDoList-CLI-.git
 cd ToDoList-CLI-
 # Build the files
 cmake -B build
